@@ -1,0 +1,29 @@
+
+.homepage-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 200px;
+    box-sizing: border-box;
+}
+
+.homepage-container .title{
+    color: darkorchid;
+    font-weight: 3000;
+    font-size: 50px;
+}
+
+.homepage-container{   
+    cursor: pointer;
+}
+
+.homepage-container .container-exam .exam-title{
+    padding: 50px 300px;
+    background-color: aliceblue;
+    border: 2px solid black;
+    border-radius: 20px;
+    min-width: 450px;
+    font-size: 30px;
+}

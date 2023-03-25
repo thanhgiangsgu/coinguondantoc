@@ -1,0 +1,15 @@
+.conpetition-manage-container{
+
+}
+
+.competition-mamage-container .competition-list .competition-item{
+    margin-left: 10px;
+}
+
+.competition-list .competition-item h5{
+    
+    font-weight: 500;
+    border: 1px solid aquamarine;
+    padding: 10px 20px;
+    border-radius: 30px;
+}

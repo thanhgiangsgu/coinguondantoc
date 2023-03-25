@@ -1,0 +1,333 @@
+.exam2-container {
+  position: relative;
+  width: 1280px;
+  height: 720px;
+  margin: 40px auto;
+}
+
+.exam2-container .img-hide {
+  width: 1280px;
+  height: 720px;
+  z-index: 0;
+  position: absolute;
+}
+
+.exam2-container .img-child
+{
+  position: absolute; 
+}
+
+.piece {
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  border-radius: 10px;
+  border: 1px solid black;
+  z-index: 1;
+}
+
+.piece-title{
+  position: absolute;
+  top: -10px;
+  transform: translate(-50%, -50%);
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 2;
+}
+
+
+.piece-1{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: blue;
+  
+  clip-path: polygon(
+    0 0,
+      20% 0,
+      25% 25%,
+      20% 50%,
+      0 45%,
+      0 0
+  );
+}
+
+.piece-2{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: brown;
+  clip-path: polygon(
+      20% 0,
+      40% 0,
+      45% 30%,
+      20% 50%,
+      25% 25%,
+      20% 0,
+      40% 0
+  );
+  overflow: visible;
+}
+
+.piece-3{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: blueviolet;
+  clip-path: polygon(
+      40% 0,
+      65% 0,
+      60% 20%,
+      65% 45%,
+      45% 45%,
+      40% 0,
+      65% 0
+  );
+}
+
+.piece-4{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: chartreuse;
+  clip-path: polygon(
+      65% 0,
+      85% 0,
+      90% 40%,
+      65% 45%,
+      60% 20%,
+      65% 0,
+      85% 0
+  );
+}
+
+.piece-5{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: dimgrey;
+  clip-path: polygon(
+      85% 0,
+      100% 0,
+      100% 60%,
+      90% 40%,
+      85% 0,
+      100% 0
+  );
+}
+
+.piece-6{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: coral;
+  clip-path: polygon(
+      100% 60%,
+      100% 100%,
+      80% 75%,
+      90% 40%
+  );
+}
+
+.piece-7{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: aqua;
+  clip-path: polygon(
+      100% 100%,
+      60% 100%,
+      70% 80%,
+      80% 75%
+  );
+}
+
+.piece-8{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: cadetblue;
+  clip-path: polygon(
+      60% 100%,
+      70% 80%,
+      45% 78%,
+      25% 80%,
+      20% 100%
+  );
+}
+
+.piece-9{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: bisque;
+  clip-path: polygon(
+    0 45%,
+    36% 54%,
+    20% 100%,
+    0 100%
+  );
+}
+
+.piece-10{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: darkkhaki;
+  clip-path: polygon(
+    20% 50%,
+    43.5% 31.5%,
+    50% 45%,
+    45% 78%,
+    27% 80%,
+    36% 54%,
+    20% 50%
+  );
+}
+
+
+
+.piece-11{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: crimson;
+  clip-path: polygon(
+    50% 45%,
+    65% 45%,
+    70% 80%,
+    45% 78%
+  );
+}
+
+.piece-12{
+  width: 1280px;
+  height: 720px;
+  position: absolute;
+  background-color: fuchsia;
+  clip-path: polygon(
+    65% 45%,
+    90% 40%,
+    80% 75%,
+    70% 80%
+  );
+}
+
+.test
+{
+  position: absolute;
+  z-index: 2;
+  top: 10%;
+  left: 10%;
+}
+
+
+
+.piece-text-1{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  top: 50px;
+  left: 100px;
+}
+
+.piece-text-2{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  top: 40px;
+  left: 400px;
+}
+
+.piece-text-3{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  left: 650px;
+}
+.piece-text-4{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  top: 40px;
+  right: 300px
+}
+.piece-text-5{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  top: 40px;
+  right: 35px;
+}
+.piece-text-6{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  bottom: 100px;
+  right: 70px;
+}
+.piece-text-7{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  bottom: -50px;
+  right: 240px;
+}
+.piece-text-8{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  bottom: -50px;
+  left: 550px;
+}
+.piece-text-9{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  bottom: 40px;
+  left: 140px;
+}
+
+
+.piece-text-10{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  left: 450px;
+  top: 300px;
+}
+
+.piece-text-11{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  bottom: 120px;
+  left: 680px;
+}
+
+.piece-text-12{
+  position: absolute;
+  z-index: 4;
+  color: aliceblue;
+  font-size: 100px;
+  right: 250px;
+  top: 300px;
+}
+
+
+.sizeModal{
+  width: 1300px !important;
+}

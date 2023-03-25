@@ -1,0 +1,74 @@
+.modal-container{
+    position: relative;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-container  .exam2-title{
+    font-weight: bold;
+    font-size: 20px;
+    color: cornflowerblue;
+    text-align: center;
+}
+
+.modal-container .exam2-name{
+    background-color: indigo;
+    border-radius: 20px;
+    color: aliceblue;
+    align-items: center;
+}
+
+.modal-container .exam2-name h1{
+    padding: 0 200px; 
+}
+
+.modal-container .show-question .question-order{
+    font-size: 50px;
+    color: red;
+}
+
+.modal-container .show-question .question-content{
+    font-size: 30px;
+}
+
+.modal-container .ans-box{
+    width: 700px;
+    font-size: 15px;
+}
+
+.modal-container .box-control{
+    margin-left: 50px;
+    width: 200px;
+}
+
+.modal-container .box-control .button-control{
+    width: 200px;
+}
+
+.answer-modal{
+    width: 1200px !important;
+}
+
+.answer-modal-container .modal-title{
+    width: 100%;
+    float: right;
+}
+
+.list-answer .team-name{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    border: 3px solid greenyellow;
+    border-radius: 30px;
+    border-top: none;
+    color: cornflowerblue;
+}
+
+.list-answer .team-answer
+{
+    font-weight: 900;
+    color: midnightblue;
+    font-size: 20px;
+}

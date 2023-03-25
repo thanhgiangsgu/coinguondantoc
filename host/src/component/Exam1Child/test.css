@@ -1,0 +1,151 @@
+.exam1-child-container{
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  
+  .exam1-child-container  .exam1-title{
+    font-weight: bold;
+    font-size: 30px;
+    color: cornflowerblue;
+    text-align: center;
+    justify-self: center;
+    align-items: center;
+    width: 15000px;
+  }
+  
+  .exam1-child-container .exam1-name{
+    background-color: indigo;
+    border-radius: 20px;
+    color: aliceblue;
+  }
+  
+  .exam1-child-container .box-exam1{
+    position: relative;
+    margin-right: 25%;
+    margin-top: 2%;
+  }
+  
+  .exam1-child-container .exam1-name h1{
+    font-size: 50px;
+    padding: 0 100px;
+  }
+  
+  .exam1-child-container .question-set {
+    position: absolute;
+    top: -50%;
+    right: -25%;
+    background-color: indigo;
+    border-radius: 50%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 250px;
+    width: 250px;
+    text-align: center;
+    font-size: 40px;
+    color: aliceblue;
+  }
+  
+  .exam1-child-container .box-exam1 .show-ques {
+    border: 2px solid black;
+    width: 1200px;
+    height: 200px;
+    border-radius: 20px;
+  }
+  
+  .exam1-child-container .box-exam1 .show-ans {
+    border: 2px dotted black;
+    width: 1000px;
+    height: 200px;
+    border-radius: 30px;
+  }
+  
+  .exam1-child-container .box-exam1 .countdown-time {
+    border: 2px solid black;
+    width: 200px;
+    height: 200px;
+  }
+  
+  .exam1-child-container .box-exam1 h6 {
+    font-size: 30px;
+    padding: 0;
+    position: absolute;
+    top: -35%;
+  }
+  
+  .exam1-child-container .box-exam1 .show-ques h1, 
+  .exam1-child-container .box-exam1 .show-ans h1
+  {
+    text-align: left;
+    align-items: flex-end;
+  }
+  
+  .list-question-box
+  {
+    width: 400px;
+    height: 700px;
+    border: 1px solid rgb(102, 42, 42);
+    margin: auto;
+    margin-left: 50px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: aqua;
+  }
+  
+  .list-question-box .list-ques{
+    margin-right: 30px;
+  }
+  
+  .list-question-box .card-item
+  {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+    text-align: center;
+    color: blue;
+  }
+  
+  .list-question-box .button-control{
+    width: 250px;
+    height: 40px;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+  }
+  
+  
+  
+  .countdown-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    color: cornflowerblue;
+    border: orange 5px solid;
+    width: 200px;
+    border-radius: 50%;
+  }
+  
+  .countdown-timer span {
+    animation: countdown 15s linear forwards;
+    padding: 50px;
+    font-size: 70px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
