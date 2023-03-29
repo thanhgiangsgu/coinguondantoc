@@ -5,7 +5,7 @@ import { Modal, Button } from 'antd';
 import './Exam2.css'
 import axiosInstance from '../../importAxios'
 
-const Exam2 = ({secondPhaseQuestions, setStep, listAnswer}) => {
+const Exam2 = ({secondPhaseQuestions, setStep, listAnswer, competitionName}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tmpDataChild, setTmpDataChild] = useState();
     const [zIndices, setZindices] = useState(JSON.parse(localStorage.getItem('arrExam2')))

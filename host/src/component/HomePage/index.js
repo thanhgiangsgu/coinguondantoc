@@ -11,7 +11,7 @@ const initInfo = {
   password: "",
 }
 
-const HomePage = ({ setStep,setFirstPhaseQuestions, setSecondPhaseQuestions }) => {
+const HomePage = ({ setStep, setFirstPhaseQuestions, setSecondPhaseQuestions ,competitionName}) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [info, setInfo] = useState(initInfo)
@@ -45,7 +45,10 @@ const HomePage = ({ setStep,setFirstPhaseQuestions, setSecondPhaseQuestions }) =
   };
 
   const handleClick = () => {
-    showModal()
+    if (localStorage.getItem('token')) {
+      setStep('admin')
+    } else
+      showModal()
   }
 
   const handleChangeInput = (name, value) => {
@@ -55,16 +58,20 @@ const HomePage = ({ setStep,setFirstPhaseQuestions, setSecondPhaseQuestions }) =
 
   const handleClickContest = async (idContest) => {
     try {
-      const response = await axiosInstance.post(`phase/${idContest}/start`);
-      const data = response.data;
-      console.log(data);
-      if (idContest == 1 ){
-        setFirstPhaseQuestions(data)
-        
-        setStep('exam1')
+      if (localStorage.getItem('token')) {
+        const response = await axiosInstance.post(`phase/${idContest}/start`);
+        const data = response.data;
+        console.log(data);
+        if (idContest == 1) {
+          setFirstPhaseQuestions(data)
+
+          setStep('exam1')
+        } else {
+          setSecondPhaseQuestions(data);
+          setStep('exam2')
+        }
       } else {
-        setSecondPhaseQuestions(data);
-        setStep('exam2')
+        toast.error("Bạn chưa đăng nhập")
       }
     } catch (error) {
       toast.error("Có thể bạn chưa bắt đầu cuộc thi")
@@ -75,8 +82,7 @@ const HomePage = ({ setStep,setFirstPhaseQuestions, setSecondPhaseQuestions }) =
   return (
     <div className='homepage-container'>
       <Space direction='vertical'>
-        <Space className='title'>HỘI THI TÌM HIỂU LỊCH SỬ CỘI NGUỒN DÂN TỘC
-          LẦN THỨ XV
+        <Space className='title'>{competitionName}
         </Space>
         <Space
           onClick={() => handleClickContest(1)}

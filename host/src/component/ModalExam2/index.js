@@ -1,21 +1,21 @@
 import React from 'react'
 import { Space, Button, Modal } from 'antd'
 import './ModalExam2.css'
-import { useState, useEffect } from 'react'
-import axiosInstance from '../../importAxios' 
+import { useState, useEffect, useRef } from 'react'
+import axiosInstance from '../../importAxios'
 import { toast } from 'react-hot-toast'
 
 
 
 const ModalExam2 = (tmpDataChild) => {
-    const listAnswer = JSON.parse(localStorage.getItem('listAnswer'))
+    const listAnswer = JSON.parse(localStorage.getItem('listAnswer')) || []
     const info = tmpDataChild.tmpDataChild
     console.log(info);
     const [timeLeft, setTimeLeft] = useState(-1);
     const [showAns, setShowAns] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isShowAnswer, setIsShowAnswer] = useState(false);
-
+    const audioRef = useRef(null);
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -47,7 +47,7 @@ const ModalExam2 = (tmpDataChild) => {
         const response = await axiosInstance.post(`/question/${info.id}/stop`);
     }
 
-    const handleUpdateScore = async (check, teamId , name) => {
+    const handleUpdateScore = async (check, teamId, name) => {
         let score = 0;
         if (check) score = 5;
         const dataScore = {
@@ -57,12 +57,21 @@ const ModalExam2 = (tmpDataChild) => {
             score: score,
         }
         const response = await axiosInstance.post(`/score`, dataScore)
-        toast.success(`Cập nhật điểm thành công cho ${name}`) 
+        toast.success(`Cập nhật điểm thành công cho ${name}`)
+    }
+
+    const handleClickCountingTime = () => {
+        audioRef.current.play();
+        setTimeLeft(20);
     }
 
 
     return (
         <div className='modal-container'>
+            <audio ref={audioRef}>
+                {console.log("sound")}
+                <source src="countdown20s.mp3" type="audio/mp3" />
+            </audio>
             <Space className='exam2-title'>
                 <h1>HỘI THI TÌM HIỂU LỊCH SỬ CỘI NGUỒN DÂN TỘC LẦN THỨ XV</h1>
             </Space>
@@ -86,7 +95,7 @@ const ModalExam2 = (tmpDataChild) => {
                     </Space>
                     <Space className='box-control'>
                         <Space direction='vertical'>
-                            <Button className='button-control' type='primary' onClick={() => setTimeLeft(20)}>Đếm giờ</Button>
+                            <Button className='button-control' type='primary' onClick={handleClickCountingTime}>Đếm giờ</Button>
                             <Button className='button-control' type='primary' onClick={() => setShowAns(info.correctAnswers.content)}>Hiện câu trả lời</Button>
                             <Button onClick={() => showModal()} className='button-control' type='primary'>Xem câu trả lời của các nhóm</Button>
                         </Space>
@@ -108,7 +117,7 @@ const ModalExam2 = (tmpDataChild) => {
                                 <div className='answer-item'>
                                     <h2 className='team-name'>{answerItem.name}</h2>
                                     <h3 className='team-answer'>{isShowAnswer ? (answerItem.answer !== "" ? answerItem.answer : "Chưa đưa ra câu trả lời") : "Câu trả lời đã được ẩn"}</h3>
-                                    <Button onClick={() => handleUpdateScore(true, answerItem.id,answerItem.name)} style={{float: 'right'}} type='primary'>Đúng</Button> <Button onClick={() =>handleUpdateScore(false, answerItem.id, answerItem.name)} style={{float: 'right'}} type='primary' danger>Sai</Button>
+                                    <Button onClick={() => handleUpdateScore(true, answerItem.id, answerItem.name)} style={{ float: 'right' }} type='primary'>Đúng</Button> <Button onClick={() => handleUpdateScore(false, answerItem.id, answerItem.name)} style={{ float: 'right' }} type='primary' danger>Sai</Button>
                                 </div>
                             )
                         })}

@@ -22,7 +22,7 @@ item[1] = {
   style: 2 === 0 ? { height: 200 } : undefined,
 }
 item[2] = {
-  label: `Quản lý cuộc thi`,
+  label: `Quản lý câu hỏi`,
   key: 3,
   children: <QuestionManage />,
   style: 3 === 0 ? { height: 200 } : undefined,

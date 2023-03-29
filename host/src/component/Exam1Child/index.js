@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Space, Card, Button, Modal, Image } from 'antd'
 import './Exam1Child.css'
 import axiosInstance from '../../importAxios'
@@ -18,6 +18,7 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
   const [mediaLink, setMediaLink] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [questionId, setQuestionId] = useState(0);
+  const audioRef = useRef(null);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -36,7 +37,6 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
   useEffect(() => {
     if (timeLeft < 1) {
       handleStopQuestion();
-
       return
     }
     const timer = setInterval(() => {
@@ -98,8 +98,17 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
 
   }
 
+  const handleClickCountingTime = () => {
+    audioRef.current.play();
+    setTimeLeft(15);
+  }
+
   return (
     <div className='exam1-child-container'>
+      <audio ref={audioRef}>
+        {console.log("sound")}
+        <source src="countdown15s.mp3" type="audio/mp3" />
+      </audio>
       <Space direction='vertical'>
         <Space className='exam1-title'>
           <h1>{competitionName}</h1>
@@ -194,7 +203,7 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
                   </Space>
                 </Space>
                 <Space direction='vertical'>
-                  <Button className='button-control' type='primary' onClick={() => setTimeLeft(15)}>Đếm giờ</Button>
+                  <Button className='button-control' type='primary' onClick={handleClickCountingTime}>Đếm giờ</Button>
                   <Button onClick={() => setIsModalOpen(true)} disabled={isSelectedImgButton} className='button-control' type='primary'>Hình ảnh</Button>
                   <Button onClick={() => setIsModalOpen(true)} disabled={isSelectedVideoButton} className='button-control' type='primary'>Video</Button>
                   <Button onClick={handleUpdateScore} disabled={isShowConfirmAnswer} className='button-control' type='primary'>Trả lời đúng</Button>

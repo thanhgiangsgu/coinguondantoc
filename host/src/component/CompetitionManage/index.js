@@ -87,7 +87,6 @@ const CompetitionManage = ({ stompClient, teamList }) => {
     };
 
     const startCompetition = async (id) => {
-        console.log("join to start");
         axiosInstance.post(`competition/${id}/start`)
             .then(response => {
                 const data = response.data;

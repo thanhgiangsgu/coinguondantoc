@@ -21,7 +21,8 @@ function App() {
   const [stompClient, setStompClient] = useState(null)
   const [teamList, setTeamList] = useState([])
   const [teamIdSelected, setTeamIdSelected] = useState(0);
-
+  const competition = JSON.parse(localStorage.getItem('dataCompetition')) || {};
+  const competitionName = competition.name || "";
   useEffect(() => {
     var socket = new SockJS('http://14.225.192.174:8111/gs-guide-websocket');
     const stompClient = Stomp.over(socket)
@@ -38,7 +39,7 @@ function App() {
         if (jsonObject.cmd == "TEAM_ANSWER") {
           localStorage.removeItem('listAnswer')
           localStorage.setItem('listAnswer', JSON.stringify(jsonObject.data));
-        } 
+        }
         // setListTeamData(prevListTeamData => [...prevListTeamData, teamCode]);
         // console.log(listTeamData);
       });
@@ -49,6 +50,7 @@ function App() {
     <div>
       {step == 'exam1' ? (
         <Exam1
+          competitionName={competitionName}
           teamList={teamList}
           firstPhaseQuestions={firstPhaseQuestions}
           setStep={setStep}
@@ -56,6 +58,7 @@ function App() {
         />
       ) : step == 'exam1Child' ? (
         <Exam1Child
+          competitionName={competitionName}
           setStep={setStep}
           teamIdSelected={teamIdSelected}
         //firstPhaseQuestions={firstPhaseQuestions}
@@ -63,10 +66,11 @@ function App() {
         />
       ) : step == 'homepage' ?
         (<HomePage
+          competitionName={competitionName}
           setStep={setStep}
           setFirstPhaseQuestions={setFirstPhaseQuestions}
           setSecondPhaseQuestions={setSecondPhaseQuestions}
-        />) : step == 'admin' ? (<Admin stompClient={stompClient} setStep={setStep} teamList={teamList} />) : (<Exam2 secondPhaseQuestions={secondPhaseQuestions} />)}
+        />) : step == 'admin' ? (<Admin stompClient={stompClient} setStep={setStep} teamList={teamList} />) : (<Exam2 competitionName={competitionName} secondPhaseQuestions={secondPhaseQuestions} setStep={setStep} />)}
     </div>
   );
 }

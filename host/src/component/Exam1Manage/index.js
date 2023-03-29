@@ -78,13 +78,19 @@ const Exam1Manage = ({ selectedOptionCompetition, dataExam1 }) => {
       console.log(tmpInfo);
       const response = await axiosInstance.post(`/question`, tmpInfo);
       const data = response.data;
-      // const newCourses = [...courses];
-      // newCourses.questions.push(data);
-      // setCourses(newCourses)
-      console.log(data);
-      courses.questions.push(data)
-      console.log("new : ",courses.questions);
-      await setCourses(courses)
+      const newCourses = {...courses};
+      console.log("newSourses", newCourses);
+      console.log("newCourses.questions before push data", newCourses);
+      newCourses.questions.push(data);
+      console.log("newCourses.questions after push data", newCourses); 
+      setCourses(newCourses)
+      console.log("sourses after setCourses : ",courses);
+      setInfo(initState)
+      // console.log(data);
+      // courses.questions.push(data)
+      // console.log("new : ",courses.questions);
+      // await setCourses(courses)
+      
     } catch (error) {
       console.log(error);
     }
