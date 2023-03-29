@@ -12,6 +12,7 @@ const Exam2 = ({secondPhaseQuestions, setStep, listAnswer, competitionName}) => 
     const arrQuestion = secondPhaseQuestions.secondPhaseQuestions;
     const [indexSelected, setIndexSelected] = useState(-1)
     console.log(arrQuestion);
+    const secondPhaseImage = secondPhaseQuestions.secondPhaseImage;
     const showModal = async () => {
         setIsModalOpen(true)
     }
@@ -38,6 +39,8 @@ const Exam2 = ({secondPhaseQuestions, setStep, listAnswer, competitionName}) => 
         setIndexSelected(index)
     }
 
+    console.log(secondPhaseImage);
+
     
 
 
@@ -46,7 +49,7 @@ const Exam2 = ({secondPhaseQuestions, setStep, listAnswer, competitionName}) => 
     return (
         <>
             <div className='exam2-container'>
-            <img className='img-hide' src={"https://cdn.pixabay.com/photo/2015/04/19/08/32/rose-729509__340.jpg"}>
+            <img className='img-hide' src={secondPhaseImage}>
                 </img>
                 <div
                     style={{ zIndex: zIndices[1]}}
