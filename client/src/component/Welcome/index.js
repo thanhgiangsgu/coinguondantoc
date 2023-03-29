@@ -9,7 +9,6 @@ const Welcome = ({ setStep, sendDataToServer }) => {
   const [code, setCode] = useState("")
   function handleKeyPress(event) {
     if (event.key === 'Enter') {
-      console.log(code);
       if (code === '') {
         toast.error('Vui lòng nhập tên đội', {
           position: 'top-right',

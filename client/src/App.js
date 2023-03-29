@@ -24,27 +24,11 @@ function App() {
   const [score, setScore] = useState(0);
   const [question , setQuestion] = useState({});
 
-  // useEffect(() => {
-  //   var socket = new SockJS('http://14.225.192.174:8111/gs-guide-websocket')
-  //   const stompClient = Stomp.over(socket);
-  //   stompClient.connect({}, function () {
-  //     stompClient.subscribe(`/topic/${teamName}`, function (message) {
-  //       const teamCode = JSON.parse(message.body);
-  //       console.log(teamCode);
-  //     });
-  //   });
-  //   return () => stompClient.disconnect();
-  // },[])
-
   useEffect(() => {
     var socket = new SockJS('http://14.225.192.174:8111/gs-guide-websocket');
     const stompClient = Stomp.over(socket)
     stompClient.connect({}, function () {
       setStompClient(stompClient)
-      // stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
-      //   const jsonObject = JSON.parse(greeting.body);
-      //   console.log(jsonObject);
-      // })
     })
   }, [])
   function sendAnswerToServer(answer){
@@ -52,7 +36,7 @@ function App() {
     const body = JSON.stringify({ teamCode: teamCode, answer: answer})
     stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
         const jsonObject = JSON.parse(greeting.body);
-        console.log(jsonObject);
+        
       })
     stompClient.send('/app/answer', headers, body);
     setStep('loading')
@@ -64,8 +48,6 @@ function App() {
     const body = JSON.stringify({ teamCode })
     stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
       const jsonObject = JSON.parse(greeting.body);
-      console.log(jsonObject.cmd);
-      console.log(jsonObject)
       if (jsonObject.cmd == "TEAM_CONNECTED") {
         setTeamName(jsonObject.data.name)
         setScore(jsonObject.data.score);
@@ -112,7 +94,6 @@ function App() {
         }, 2000);
 
       }
-      console.log(jsonObject.cmd);
       if (jsonObject.cmd == "TEAM_SCORE"){
         setPhase(0)
         setScore(jsonObject.data.score)
@@ -123,25 +104,6 @@ function App() {
     })
     stompClient.send('/app/sub', headers, body);
   }
-
-  const handleSendTeamCode = () => {
-    const headers = {}
-    const body = JSON.stringify({ teamCode })
-    stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
-      const jsonObject = JSON.parse(greeting.body);
-      console.log(jsonObject);
-    })
-    stompClient.send('/app/sub', headers, body);
-  }
-
-  const handleSendAnswer = () => {
-    const headers = {}
-    const body = JSON.stringify({ teamCode, answer })
-    console.log(body.data);
-    stompClient.send('/app/answer', headers, body);
-  }
-
-
 
   return (
     <div>
