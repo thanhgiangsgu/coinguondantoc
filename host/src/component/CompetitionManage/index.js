@@ -2,11 +2,11 @@ import React from 'react'
 import { Space, Button, Modal, Input } from 'antd'
 import { useState, useEffect } from 'react'
 import axiosInstance from '../../importAxios'
+import {toast} from 'react-hot-toast'
 import './CompetitionManage.css'
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs';
 const CompetitionManage = ({ stompClient, teamList }) => {
-    console.log(teamList);
     const initArr = new Array(100).fill(3);
     const [competitionList, setCompetitionList] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -46,8 +46,10 @@ const CompetitionManage = ({ stompClient, teamList }) => {
                 const newCompetitionList = [...competitionList];
                 newCompetitionList.push(data);
                 setCompetitionList(newCompetitionList)
+                toast.success("Thêm thành công", {position: 'top-right'})
             })
             .catch(error => {
+                toast.error("Xảy ra lỗi", {position: 'top-right'})
                 console.error(error);
             });
     }
@@ -56,30 +58,13 @@ const CompetitionManage = ({ stompClient, teamList }) => {
         fetchTeamList()
     },[])
 
-    // useEffect(() => {
-    //     fetchTeamList();
-    //     // stompClient.subscribe('/topic/host', function (message) {
-    //     //     const teamCode = JSON.parse(message.body);
-    //     //     console.log(teamCode);
-    //     //     setListTeamData(prevListTeamData => [...prevListTeamData, teamCode]);
-    //     //     console.log(listTeamData);
-    //     // });
-    //     if (stompClient) {
-            // stompClient.subscribe('/topic/host', function (message) {
-            //     const teamCode = JSON.parse(message.body);
-            //     console.log(teamCode);
-            //     setListTeamData(prevListTeamData => [...prevListTeamData, teamCode]);
-            //     console.log(listTeamData);
-            // });
-    //     }
-    // }, [stompClient]);
-
     const showModal = () => {
         setIsModalOpen(true);
     };
     const handleOk = async () => {
         await addData();
         await fetchTeamList();
+        setName("")
         setIsModalOpen(false);
     };
     const handleCancel = () => {
@@ -90,12 +75,13 @@ const CompetitionManage = ({ stompClient, teamList }) => {
         axiosInstance.post(`competition/${id}/start`)
             .then(response => {
                 const data = response.data;
-                console.log(data);
                 setListTeam(data.teams)
                 setIsDisableShowListTeam(false)
                 localStorage.setItem('dataCompetition', JSON.stringify(data));
+                toast.success(`Bắt đầu cuộc thi ${data.name}`)
             })
             .catch(error => {
+                toast.error("Xảy ra lỗi", {position: 'top-right'})
                 console.error(error);
             });
     }
@@ -140,7 +126,7 @@ const CompetitionManage = ({ stompClient, teamList }) => {
             </Space>
 
             <Modal title="Nhập tên cuộc thi" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <Input onChange={(e) => setName(e.target.value)} />
+                <Input value={name} onChange={(e) => setName(e.target.value)} />
             </Modal>
 
             <Modal title="Basic Modal" open={isTeamListModal} onOk={teamListhandleOk} onCancel={teamListHandleCancel}>

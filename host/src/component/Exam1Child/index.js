@@ -32,8 +32,6 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
     setIsModalOpen(false);
   };
 
-  console.log(tmpData);
-
   useEffect(() => {
     if (timeLeft < 1) {
       handleStopQuestion();
@@ -46,7 +44,6 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
   }, [timeLeft])
 
   const handleStopQuestion = async () => {
-    console.log(`/question/${questionId}/stop`);
     const response = await axiosInstance.post(`/question/${questionId}/stop`)
   }
 
@@ -63,11 +60,8 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
       setIsSelectedImgButton(true);
       setIsSelectedVideoButton(false);
       const videoUrl = tmpData[index].mediaLink;
-      console.log(videoUrl);
       const videoId = videoUrl.split('v=')[1];
-      console.log(videoId);
       const embeddedUrl = `https://www.youtube.com/embed/${videoId}`;
-      console.log(embeddedUrl);
       setMediaLink(embeddedUrl)
     } else {
       setIsSelectedImgButton(true);
@@ -79,7 +73,7 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
   }
 
   const handleClickAnsCard = (index) => {
-    // console.log(tmpData[index]);
+
     setAns(tmpData[index].correctAnswers.content)
     setIsShowConfirmAnswer(false)
   }
@@ -106,7 +100,6 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
   return (
     <div className='exam1-child-container'>
       <audio ref={audioRef}>
-        {console.log("sound")}
         <source src="countdown15s.mp3" type="audio/mp3" />
       </audio>
       <Space direction='vertical'>

@@ -11,19 +11,16 @@ const Exam2 = ({secondPhaseQuestions, setStep, listAnswer, competitionName}) => 
     const [zIndices, setZindices] = useState(JSON.parse(localStorage.getItem('arrExam2')))
     const arrQuestion = secondPhaseQuestions.secondPhaseQuestions;
     const [indexSelected, setIndexSelected] = useState(-1)
-    console.log(arrQuestion);
     const secondPhaseImage = secondPhaseQuestions.secondPhaseImage;
     const showModal = async () => {
         setIsModalOpen(true)
     }
-    console.log(tmpDataChild);
 
     const handleOk = async () => {
         const newZIndices = [...zIndices];
         newZIndices[indexSelected + 1] = -2;
         localStorage.setItem("arrExam2", JSON.stringify(newZIndices))
         await setZindices(newZIndices)
-        console.log(zIndices);
         setIsModalOpen(false)
     }
 
@@ -32,19 +29,11 @@ const Exam2 = ({secondPhaseQuestions, setStep, listAnswer, competitionName}) => 
     }
 
     const handleClick = async (dataChild, index) => {
-        console.log(dataChild.id);
         setTmpDataChild(dataChild)
         const response = await axiosInstance.post(`/question/${dataChild.id}/start`);
         showModal();
         setIndexSelected(index)
     }
-
-    console.log(secondPhaseImage);
-
-    
-
-
-
 
     return (
         <>

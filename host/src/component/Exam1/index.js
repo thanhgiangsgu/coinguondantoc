@@ -4,11 +4,11 @@ import { Card, Space, Typography, Modal, Select } from 'antd'
 import { useState, useEffect } from 'react';
 import './Exam1.css'
 import axiosInstance from '../../importAxios'
+import {toast} from  'react-hot-toast'
 
 const { Title } = Typography;
 
 const Exam1 = ({ setStep, firstPhaseQuestions, competitionName, teamList , setTeamIdSelected}) => {
-    console.log(teamList);
     const { Option } = Select;
     const [zIndices, setZindices] = useState(JSON.parse(localStorage.getItem('arrExam1')))
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,22 +18,17 @@ const Exam1 = ({ setStep, firstPhaseQuestions, competitionName, teamList , setTe
    
 
     const showModal = async (item, index) => {
-        console.log(index);
         await setDataPhase(item)
-        console.log(dataPhase.id);
         await setIndexCourse(index)
-        console.log(indexCourse);
         setIsModalOpen(true);
     };
     const handleOk = async () => {
-        console.log(teamCodeSeleted);
-        console.log(indexCourse);
         if (teamCodeSeleted != "") {
             const response = await axiosInstance.post(`/course/${dataPhase.id}/start?teamCode=${teamCodeSeleted}`);
             handleChooseQuestionSet(dataPhase, indexCourse)
             setIsModalOpen(false);
         } else
-            alert("vui long chon doi")
+            toast.error("Vui lòng chọn đội", {position: 'top-right'})
     };
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -45,7 +40,6 @@ const Exam1 = ({ setStep, firstPhaseQuestions, competitionName, teamList , setTe
         setZindices(newZIndices);
         const data = item.questions;
         data.sort((a, b) => a.id - b.id);
-        console.log(data);
         localStorage.setItem('arrExam1', JSON.stringify(newZIndices));
         const dataQuestionSet = {
             name: `Bộ  ${index + 1}`,
@@ -53,18 +47,15 @@ const Exam1 = ({ setStep, firstPhaseQuestions, competitionName, teamList , setTe
         }
 
         localStorage.setItem('dataQuestionSet', JSON.stringify(dataQuestionSet))
-        console.log(dataQuestionSet);
+        toast.success(`Chọn bộ câu hỏi ${index + 1}`, {position: 'top-right'})
         setStep('exam1Child');
     };
 
     useEffect(() => {
-        console.log("data updated: ", dataPhase);
     }, [dataPhase])
 
     const handleChange = async (value, option) => {
-        console.log(option);
         await setTeamIdSelected(option.data.id)
-        console.log(option.data.id);
         setTeamCodeSelected(value)
     }; 
 

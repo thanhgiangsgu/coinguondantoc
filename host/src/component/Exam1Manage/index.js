@@ -29,9 +29,6 @@ const Exam1Manage = ({ selectedOptionCompetition, dataExam1 }) => {
   useEffect(() => {
     setCoursesArr(dataExam1);
   }, [dataExam1]);
-  console.log(dataExam1);
-  console.log(coursesArr);
-  console.log(selectedOptionCompetition);
   const handleClickAddNewSourses = async () => {
     try {
       const response = await axiosInstance.post(`/course?competitionId=${selectedOptionCompetition}`);
@@ -52,7 +49,6 @@ const Exam1Manage = ({ selectedOptionCompetition, dataExam1 }) => {
   const handleChangeInput = e => {
     const { name, value } = e.target
     setInfo({ ...info, [name]: value })
-    console.log(info);
   }
 
   useEffect(() => {
@@ -63,7 +59,7 @@ const Exam1Manage = ({ selectedOptionCompetition, dataExam1 }) => {
       courseId: courses.id,
       question: info.question,
       answer: info.answer,
-      type:"ESSAY",
+      type: "ESSAY",
       mediaType: "",
       mediaLink: ""
     }
@@ -75,30 +71,18 @@ const Exam1Manage = ({ selectedOptionCompetition, dataExam1 }) => {
       tmpInfo.mediaLink = info.videoLink;
     } else tmpInfo.mediaType = null
     try {
-      console.log(tmpInfo);
       const response = await axiosInstance.post(`/question`, tmpInfo);
       const data = response.data;
-      const newCourses = {...courses};
-      console.log("newSourses", newCourses);
-      console.log("newCourses.questions before push data", newCourses);
+      const newCourses = { ...courses };
       newCourses.questions.push(data);
-      console.log("newCourses.questions after push data", newCourses); 
       setCourses(newCourses)
-      console.log("sourses after setCourses : ",courses);
       setInfo(initState)
-      // console.log(data);
-      // courses.questions.push(data)
-      // console.log("new : ",courses.questions);
-      // await setCourses(courses)
-      
     } catch (error) {
       console.log(error);
     }
   }
 
   useEffect(() => {
-    // This code will run after the state has been updated
-    console.log(courses);
   }, [courses]);
   return (
     <Space className='exam1-manage-container' direction='vertical'>

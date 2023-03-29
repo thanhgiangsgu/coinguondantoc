@@ -8,7 +8,7 @@
 .exam2-container .img-hide {
   width: 1280px;
   height: 720px;
-  z-index: 0;
+  z-index: 0 !important;
   position: absolute;
 }
 

@@ -21,9 +21,7 @@ const TeamManage = () => {
                 value: competition.id.toString(),
                 label: competition.name,
             }));
-            console.log(newOptions);
             setCompetitionList([...options, ...newOptions])
-            console.log(options);
         } catch (error) {
             console.error(error);
         }
@@ -31,18 +29,15 @@ const TeamManage = () => {
 
 
     const fetchTeamList = async (selectedOption) => {
-        console.log(selectedOption);
         try {
             const response = await axiosInstance.get(`/team?competitionId=${selectedOption}`);
             await setTeamList(response.data);
-            console.log(teamList);
         } catch (error) {
             console.error(error);
         }
     };
 
     const addNewTeam = async (name, id ) => {
-        console.log(id);
         const dataTeam = {
             competitionId: id,
             name: name,
@@ -58,7 +53,6 @@ const TeamManage = () => {
             .catch(error => {
                 console.error(error);
             });
-            
     }
 
     useEffect(() => {
@@ -70,7 +64,6 @@ const TeamManage = () => {
         var socket = new SockJS('http://14.225.192.174:8111/gs-guide-websocket');
     },[])
     const handleSelectChange = (selectedOption) => {
-        console.log("selectedOption",selectedOption);
         setSelectedOption(selectedOption);
         fetchTeamList(selectedOption)
     }
@@ -81,6 +74,7 @@ const TeamManage = () => {
     const handleOk = async () => {
         await addNewTeam(name, selectedOption)
         await fetchTeamList(selectedOption);
+        setName("")
         setIsModalOpen(false);
     };
     const handleCancel = () => {
@@ -110,7 +104,7 @@ const TeamManage = () => {
                 ))}
             </Space>
             <Modal title="Nhập tên cuộc thi" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <Input onChange={(e) => setName(e.target.value)} />
+                <Input value={name} onChange={(e) => setName(e.target.value)} />
             </Modal>
         </Space>
     )

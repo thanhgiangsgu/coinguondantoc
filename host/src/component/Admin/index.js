@@ -30,7 +30,7 @@ item[2] = {
   return (
     <>
     <Tabs defaultActiveKey="1"  items={item}  />;
-    <Button onClick={() => setStep('homepage')} style={{position: 'absolute', bottom: 0, right: '0'}}>Back to HomePage</Button>
+    <Button onClick={() => setStep('homepage')} style={{position: 'absolute', bottom: 0, right: '0'}}>Trở về trang chủ</Button>
     </>
   )
   

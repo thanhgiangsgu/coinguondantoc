@@ -30,7 +30,6 @@ function App() {
       setStompClient(stompClient)
       stompClient.subscribe('/topic/host', function (message) {
         const jsonObject = JSON.parse(message.body);
-        console.log(jsonObject);
         if (jsonObject.cmd == "TEAM_CONNECTED") {
           const newTeamList = [...teamList];
           newTeamList.push(jsonObject)
@@ -41,7 +40,6 @@ function App() {
           localStorage.setItem('listAnswer', JSON.stringify(jsonObject.data));
         }
         // setListTeamData(prevListTeamData => [...prevListTeamData, teamCode]);
-        // console.log(listTeamData);
       });
     })
   }, [teamList])

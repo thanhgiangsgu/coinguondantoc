@@ -13,8 +13,6 @@ const Exam2Manage = ({ selectedOptionCompetition, dataExam2, imgExam2 }) => {
   const [imgLink, setImgLink] = useState(imgExam2)
   const [dataExam, setDataExam] = useState([])
   const { question, answer } = info;
-  console.log("dataExam2", dataExam2);
-  console.log("dataExam", dataExam);
   useEffect(() => {
     setDataExam(dataExam2)
     setImgLink(imgExam2)
@@ -22,15 +20,12 @@ const Exam2Manage = ({ selectedOptionCompetition, dataExam2, imgExam2 }) => {
   const handleChangeInput = e => {
     const { name, value } = e.target
     setInfo({ ...info, [name]: value })
-    console.log(info);
   }
 
   const handleUpdateImgLink = async () => {
     try {
       const response = await axiosInstance.put(`competition/${selectedOptionCompetition}?image=${imgLink}`);
       const tmpData = response.data;
-      console.log(tmpData);
-      console.log("them thanh cong");
     } catch (error) {
       console.error(error);
     }
@@ -52,9 +47,11 @@ const Exam2Manage = ({ selectedOptionCompetition, dataExam2, imgExam2 }) => {
       const newData = [...dataExam];
       newData.push(data)
       setDataExam(newData)
+      setInfo(initState)
     } catch (error) {
       console.error(error);
     }
+
   }
 
   return (

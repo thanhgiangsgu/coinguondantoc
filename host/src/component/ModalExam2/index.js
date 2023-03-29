@@ -10,7 +10,6 @@ import { toast } from 'react-hot-toast'
 const ModalExam2 = (tmpDataChild) => {
     const listAnswer = JSON.parse(localStorage.getItem('listAnswer')) || []
     const info = tmpDataChild.tmpDataChild
-    console.log(info);
     const [timeLeft, setTimeLeft] = useState(-1);
     const [showAns, setShowAns] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,7 +68,6 @@ const ModalExam2 = (tmpDataChild) => {
     return (
         <div className='modal-container'>
             <audio ref={audioRef}>
-                {console.log("sound")}
                 <source src="countdown20s.mp3" type="audio/mp3" />
             </audio>
             <Space className='exam2-title'>

@@ -40,9 +40,7 @@ const QuestionManage = () => {
                 value: competition.id.toString(),
                 label: competition.name,
             }));
-            console.log(newOptions);
             setCompetitionList([...optionCompetitions, ...newOptions])
-            console.log(optionCompetitions);
         } catch (error) {
             console.error(error);
         }
@@ -66,11 +64,9 @@ const QuestionManage = () => {
 
     const handleSelectChangeCompetition = (selectedOptionCompetition) => {
         setSelectedOptionCompetition(selectedOptionCompetition)
-        console.log("selectedOptionCompetition: ", selectedOptionCompetition);
     }
     const handleSelectChange = (selectedOptionContest) => {
         setSelectedOptionContest(selectedOptionContest);
-        console.log("selectedOptionContest", selectedOptionContest);
     }
 
     const handleSearch = () => {
@@ -83,8 +79,6 @@ const QuestionManage = () => {
             } else {
                 setStep('exam2')
             }
-        console.log("dataExam1", dataExam1);
-        console.log("dataExam2", dataExam2);
     }
     return (
         <Space direction='vertical'>

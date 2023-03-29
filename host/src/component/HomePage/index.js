@@ -21,7 +21,6 @@ const HomePage = ({ setStep, setFirstPhaseQuestions, setSecondPhaseQuestions ,co
     axiosInstance.post('/user/login', info)
       .then(response => {
         const { jwt, type } = response.data;
-        console.log(info);
         localStorage.setItem("token", jwt)
         toast.success("Đăng nhập thành công", { position: 'top-right' })
         setStep('admin')
@@ -53,7 +52,6 @@ const HomePage = ({ setStep, setFirstPhaseQuestions, setSecondPhaseQuestions ,co
 
   const handleChangeInput = (name, value) => {
     setInfo({ ...info, [name]: value })
-    console.log(info);
   };
 
   const handleClickContest = async (idContest) => {
@@ -61,7 +59,6 @@ const HomePage = ({ setStep, setFirstPhaseQuestions, setSecondPhaseQuestions ,co
       if (localStorage.getItem('token')) {
         const response = await axiosInstance.post(`phase/${idContest}/start`);
         const data = response.data;
-        console.log(data);
         if (idContest == 1) {
           setFirstPhaseQuestions(data)
 
