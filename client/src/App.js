@@ -5,7 +5,7 @@ import Ready from './component/Ready';
 import Loading from './component/Loading';
 import ShowQuestion from './component/ShowQuestion';
 
-import { Toaster } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs';
@@ -14,15 +14,38 @@ var stompClient = null;
 
 function App() {
   const [teamName, setTeamName] = useState('');
-  const [entered, setEntered] = useState(false);
   const [step, setStep] = useState('welcome')
   const [phase, setPhase] = useState(0);
   const [message, setMessage] = useState("");
   const [teamCode, setTeamCode] = useState("");
-  const [answer, setAnswer] = useState("");
   const [stompClient, setStompClient] = useState(null);
   const [score, setScore] = useState(0);
-  const [question , setQuestion] = useState({});
+  const [question, setQuestion] = useState({});
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = '';
+      setShowConfirmation(true);
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+
+  const handleConfirmReload = () => {
+    setShowConfirmation(false);
+    localStorage.clear(); // Or remove specific keys as needed
+    window.location.reload();
+  };
+
+  const handleCancelReload = () => {
+    setShowConfirmation(false);
+  };
 
   useEffect(() => {
     var socket = new SockJS('http://14.225.192.174:8111/gs-guide-websocket');
@@ -31,13 +54,13 @@ function App() {
       setStompClient(stompClient)
     })
   }, [])
-  function sendAnswerToServer(answer){
-    const headers  = {};
-    const body = JSON.stringify({ teamCode: teamCode, answer: answer})
+  function sendAnswerToServer(answer) {
+    const headers = {};
+    const body = JSON.stringify({ teamCode: teamCode, answer: answer })
     stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
-        const jsonObject = JSON.parse(greeting.body);
-        
-      })
+      const jsonObject = JSON.parse(greeting.body);
+
+    })
     stompClient.send('/app/answer', headers, body);
     setStep('loading')
   }
@@ -86,7 +109,7 @@ function App() {
         }, 500);
       }
 
-      if (jsonObject.cmd == "STOP_ANSWERING"){
+      if (jsonObject.cmd == "STOP_ANSWERING") {
         setPhase(0)
         setStep('loading')
         setTimeout(() => {
@@ -94,11 +117,33 @@ function App() {
         }, 2000);
 
       }
-      if (jsonObject.cmd == "TEAM_SCORE"){
+      if (jsonObject.cmd == "TEAM_SCORE") {
         setPhase(0)
         setScore(jsonObject.data.score)
+        console.log(jsonObject.data.newScore);
+        if (jsonObject.data.newScore == 0) {
+          toast.error(`Chia buồn ${jsonObject.data.name} chưa ghi được điểm`,
+            {
+              duration: 3000,
+              style: {
+                width: '500px',
+                height: '100px',
+              },
+              position: 'top-right'
+            })
+        } else {
+          toast.success(`Chúc mừng ${jsonObject.data.name} vừa ghi được ${jsonObject.data.newScore}`,
+            {
+              duration: 3000,
+              style: {
+                width: '500px',
+                height: '100px',
+              },
+              position: 'top-right'
+            })
+        }
         setStep('ready')
-        
+
       }
 
     })
@@ -107,26 +152,39 @@ function App() {
 
   return (
     <div>
-      {step == 'ready' ? (
-        <Ready
-          stompClient={stompClient}
-          teamName={teamName}
-          score={score}
-          phase={phase}
-          message={message}
-        />
-      ) : step == 'loading' ? (
-        <Loading />
-      ) : step == 'welcome' ?
-        (
-          <Welcome
-            sendDataToServer={sendDataToServer}
-            setStep={setStep}
-            setTeamCode={setTeamCode}
-          />
-        ) : (
-          <ShowQuestion sendAnswerToServer={sendAnswerToServer} question={question}/>
+      {/* <div>
+        {showConfirmation && (
+          <div>
+            <p>Are you sure you want to reload?</p>
+            <button onClick={handleConfirmReload}>Confirm</button>
+            <button onClick={handleCancelReload}>Cancel</button>
+          </div>
         )}
+      </div> */}
+      {teamCode ? (
+        step === 'ready' ? (
+          <Ready
+            stompClient={stompClient}
+            teamName={teamName}
+            score={score}
+            phase={phase}
+            message={message}
+          />
+        ) : step === 'loading' ? (
+          <Loading />
+        ) : step === 'showQuestion' ? (
+          <ShowQuestion
+            sendAnswerToServer={sendAnswerToServer}
+            question={question}
+          />
+        ) : null // Or some default component if step is not recognized
+      ) : (
+        <Welcome
+          sendDataToServer={sendDataToServer}
+          setStep={setStep}
+          setTeamCode={setTeamCode}
+        />
+      )}
     </div>
   );
 }
