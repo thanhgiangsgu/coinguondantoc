@@ -12,9 +12,6 @@ import { Stomp } from '@stomp/stompjs';
 var stompClient = null;
 
 function App() {
-
-
-
   const [step, setStep] = useState('admin')
   const [firstPhaseQuestions, setFirstPhaseQuestions] = useState({});
   const [secondPhaseQuestions, setSecondPhaseQuestions] = useState({})
@@ -23,6 +20,11 @@ function App() {
   const [teamIdSelected, setTeamIdSelected] = useState(0);
   const competition = JSON.parse(localStorage.getItem('dataCompetition')) || {};
   const competitionName = competition.name || "";
+  console.log(competition.teams);
+  if (!localStorage.getItem('summaryTeamScores')){
+    console.log("khong ton tai");
+    localStorage.setItem('summaryTeamScores', JSON.stringify(competition.teams) || []);
+  }
   useEffect(() => {
     var socket = new SockJS('http://14.225.192.174:8111/gs-guide-websocket');
     const stompClient = Stomp.over(socket)

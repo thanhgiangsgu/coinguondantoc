@@ -56,6 +56,7 @@ const ModalExam2 = (tmpDataChild) => {
             score: score,
         }
         const response = await axiosInstance.post(`/score`, dataScore)
+        localStorage.setItem('summaryTeamScores', JSON.stringify(response.data))
         toast.success(`Cập nhật điểm thành công cho ${name}`)
     }
 

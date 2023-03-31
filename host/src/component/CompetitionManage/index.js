@@ -90,10 +90,13 @@ const CompetitionManage = ({ stompClient, teamList }) => {
         if (titleButtonStartCompetition == "Bắt đầu") {
             setSelectedCompetition(id);
             localStorage.setItem("CompetitionId", id);
+            localStorage.removeItem('summaryTeamScores')
             setTitleButtonStartCompetition("Hủy")
             startCompetition(id);
             localStorage.setItem("arrExam1", JSON.stringify(initArr))
-            localStorage.setItem("arrExam2", JSON.stringify(initArr))
+            localStorage.setItem("arrExam2Piece", JSON.stringify(initArr))
+            localStorage.setItem("arrExam2Number", JSON.stringify(initArr))
+
         } else {
             setSelectedCompetition(0)
             setTitleButtonStartCompetition("Bắt đầu")

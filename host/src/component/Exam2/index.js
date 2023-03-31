@@ -3,12 +3,14 @@ import ModalExam2 from '../ModalExam2';
 import { useState } from 'react';
 import { Modal, Button } from 'antd';
 import './Exam2.css'
+import {toast} from 'react-hot-toast'
 import axiosInstance from '../../importAxios'
 
-const Exam2 = ({secondPhaseQuestions, setStep, listAnswer, competitionName}) => {
+const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [tmpDataChild, setTmpDataChild] = useState();
-    const [zIndices, setZindices] = useState(JSON.parse(localStorage.getItem('arrExam2')))
+    const [zIndicesPiece, setZindicesPiece] = useState(JSON.parse(localStorage.getItem('arrExam2Piece')))
+    const [zIndicesNumber, setZindicesNumber] = useState(JSON.parse(localStorage.getItem('arrExam2Number')))
     const arrQuestion = secondPhaseQuestions.secondPhaseQuestions;
     const [indexSelected, setIndexSelected] = useState(-1)
     const secondPhaseImage = secondPhaseQuestions.secondPhaseImage;
@@ -17,37 +19,51 @@ const Exam2 = ({secondPhaseQuestions, setStep, listAnswer, competitionName}) => 
     }
 
     const handleOk = async () => {
-        const newZIndices = [...zIndices];
+        const newZIndices = [...zIndicesPiece];
         newZIndices[indexSelected + 1] = -2;
-        localStorage.setItem("arrExam2", JSON.stringify(newZIndices))
-        await setZindices(newZIndices)
+        localStorage.setItem("arrExam2Piece", JSON.stringify(newZIndices))
+        await setZindicesPiece(newZIndices)
+        const newZIndicesNumber = [...zIndicesNumber];
+        newZIndicesNumber[indexSelected + 1] = -2;
+        localStorage.setItem("arrExam2Number", JSON.stringify(newZIndicesNumber))
+        await setZindicesNumber(newZIndicesNumber)
+
         setIsModalOpen(false)
     }
 
-    const handleCancel = () => {
+    const handleCancel = async () => {
+        const newZIndices = [...zIndicesNumber]
+        newZIndices[indexSelected + 1] = -2;
+        localStorage.setItem("arrExam2Number", JSON.stringify(newZIndices))
+        await setZindicesNumber(newZIndices)
         setIsModalOpen(false)
     }
 
     const handleClick = async (dataChild, index) => {
-        setTmpDataChild(dataChild)
-        const response = await axiosInstance.post(`/question/${dataChild.id}/start`);
-        showModal();
-        setIndexSelected(index)
+        if (zIndicesNumber[index + 1] > 0) {
+            setTmpDataChild(dataChild)
+            const response = await axiosInstance.post(`/question/${dataChild.id}/start`);
+            showModal();
+            setIndexSelected(index)
+        } else 
+        {
+            toast.error("Không thể chọn mảnh ghép đã trả lời")
+        }
     }
 
     return (
         <>
             <div className='exam2-container'>
-            <img className='img-hide' src={secondPhaseImage}>
+                <img className='img-hide' src={secondPhaseImage}>
                 </img>
                 <div
-                    style={{ zIndex: zIndices[1]}}
+                    style={{ zIndex: zIndicesPiece[1] }}
                     onClick={() => handleClick(arrQuestion[0], 0)}
                     className='piece-1' >
 
                 </div>
-                <div 
-                    style={{ zIndex: zIndices[2] }}
+                <div
+                    style={{ zIndex: zIndicesPiece[2] }}
                     onClick={() => handleClick(arrQuestion[1], 1)}
                     className='piece piece-2'
                 >
@@ -55,82 +71,82 @@ const Exam2 = ({secondPhaseQuestions, setStep, listAnswer, competitionName}) => 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[2], 2)}
-                    style={{ zIndex: zIndices[3] }}
+                    style={{ zIndex: zIndicesPiece[3] }}
                     className='piece piece-3' >
 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[3], 3)}
-                    style={{ zIndex: zIndices[4] }}
+                    style={{ zIndex: zIndicesPiece[4] }}
                     className='piece piece-4' >
 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[4], 4)}
-                    style={{ zIndex: zIndices[5] }}
+                    style={{ zIndex: zIndicesPiece[5] }}
                     className='piece piece-5' >
 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[5], 5)}
-                    style={{ zIndex: zIndices[6] }}
+                    style={{ zIndex: zIndicesPiece[6] }}
                     className='piece piece-6' >
 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[6], 6)}
-                    style={{ zIndex: zIndices[7] }}
+                    style={{ zIndex: zIndicesPiece[7] }}
                     className='piece piece-7' >
 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[7], 7)}
-                    style={{ zIndex: zIndices[8] }}
+                    style={{ zIndex: zIndicesPiece[8] }}
                     className='piece piece-8' >
 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[8], 8)}
-                    style={{ zIndex: zIndices[9] }}
+                    style={{ zIndex: zIndicesPiece[9] }}
                     className='piece piece-9' >
 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[9], 9)}
-                    style={{ zIndex: zIndices[10] }}
+                    style={{ zIndex: zIndicesPiece[10] }}
                     className='piece piece-10' >
 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[10], 10)}
-                    style={{ zIndex: zIndices[11] }}
+                    style={{ zIndex: zIndicesPiece[11] }}
                     className='piece piece-11' >
 
                 </div>
                 <div
                     onClick={() => handleClick(arrQuestion[11], 11)}
-                    style={{ zIndex: zIndices[12]}}
+                    style={{ zIndex: zIndicesPiece[12] }}
                     className='piece piece-12' >
 
                 </div>
 
-                <h1 style={{ zIndex: zIndices[1] }} className='piece-text-1'>1</h1>
-                <h1 style={{ zIndex: zIndices[2] }} className='piece-text-2'>2</h1>
-                <h1 style={{ zIndex: zIndices[3] }} className='piece-text-3'>3</h1>
-                <h1 style={{ zIndex: zIndices[4] }} className='piece-text-4'>4</h1>
-                <h1 style={{ zIndex: zIndices[5] }} className='piece-text-5'>5</h1>
-                <h1 style={{ zIndex: zIndices[6] }} className='piece-text-6'>6</h1>
-                <h1 style={{ zIndex: zIndices[7] }} className='piece-text-7'>7</h1>
-                <h1 style={{ zIndex: zIndices[8] }} className='piece-text-8'>8</h1>
-                <h1 style={{ zIndex: zIndices[9] }} className='piece-text-9'>9</h1>
-                <h1 style={{ zIndex: zIndices[10] }} className='piece-text-10'>10</h1>
-                <h1 style={{ zIndex: zIndices[11] }} className='piece-text-11'>11</h1>
-                <h1 style={{ zIndex: zIndices[12] }} className='piece-text-12'>12</h1>
+                <h1 style={{ zIndex: zIndicesNumber[1] }} className='piece-text-1'>1</h1>
+                <h1 style={{ zIndex: zIndicesNumber[2] }} className='piece-text-2'>2</h1>
+                <h1 style={{ zIndex: zIndicesNumber[3] }} className='piece-text-3'>3</h1>
+                <h1 style={{ zIndex: zIndicesNumber[4] }} className='piece-text-4'>4</h1>
+                <h1 style={{ zIndex: zIndicesNumber[5] }} className='piece-text-5'>5</h1>
+                <h1 style={{ zIndex: zIndicesNumber[6] }} className='piece-text-6'>6</h1>
+                <h1 style={{ zIndex: zIndicesNumber[7] }} className='piece-text-7'>7</h1>
+                <h1 style={{ zIndex: zIndicesNumber[8] }} className='piece-text-8'>8</h1>
+                <h1 style={{ zIndex: zIndicesNumber[9] }} className='piece-text-9'>9</h1>
+                <h1 style={{ zIndex: zIndicesNumber[10] }} className='piece-text-10'>10</h1>
+                <h1 style={{ zIndex: zIndicesNumber[11] }} className='piece-text-11'>11</h1>
+                <h1 style={{ zIndex: zIndicesNumber[12] }} className='piece-text-12'>12</h1>
             </div>
 
-            <Button 
-                style={{position: 'absolute' , top: '0' , left: '0'}} 
-                onClick={() => setStep('homepage')}            
+            <Button
+                style={{ position: 'absolute', top: '0', left: '0' }}
+                onClick={() => setStep('homepage')}
             >Back To Homepage</Button>
 
             <Modal className='sizeModal' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>

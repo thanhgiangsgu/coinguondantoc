@@ -87,6 +87,7 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
       score: score,
     }
     const response = await axiosInstance.post(`/score`, dataScore)
+    localStorage.setItem('summaryTeamScores', JSON.stringify(response.data))
     setIsShowConfirmAnswer(true)
     toast.success(`Cập nhật điểm thành công`)
 
