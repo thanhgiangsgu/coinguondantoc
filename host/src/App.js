@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Exam1 from './component/Exam1';
 import Exam2 from './component/Exam2';
@@ -18,10 +18,12 @@ function App() {
   const [stompClient, setStompClient] = useState(null)
   const [teamList, setTeamList] = useState([])
   const [teamIdSelected, setTeamIdSelected] = useState(0);
+  const [bellRingingTeam, setBellRingingTeam] = useState({})
   const competition = JSON.parse(localStorage.getItem('dataCompetition')) || {};
   const competitionName = competition.name || "";
-  console.log(competition.teams);
-  if (!localStorage.getItem('summaryTeamScores')){
+  const [isConfirmAns, setIsConfirmAns] = useState(false);
+  const audioRef = useRef();
+  if (!localStorage.getItem('summaryTeamScores')) {
     console.log("khong ton tai");
     localStorage.setItem('summaryTeamScores', JSON.stringify(competition.teams) || []);
   }
@@ -41,6 +43,11 @@ function App() {
           localStorage.removeItem('listAnswer')
           localStorage.setItem('listAnswer', JSON.stringify(jsonObject.data));
         }
+        if (jsonObject.cmd == "TEAM_BELL") {
+          audioRef.current.play()
+          setBellRingingTeam(jsonObject.data);
+          setIsConfirmAns(true)
+        }
         // setListTeamData(prevListTeamData => [...prevListTeamData, teamCode]);
       });
     })
@@ -48,6 +55,9 @@ function App() {
 
   return (
     <div>
+      <audio ref={audioRef}>
+        <source src="/sound/bell.mp3" type="audio/mp3" />
+      </audio>
       {step == 'exam1' ? (
         <Exam1
           competitionName={competitionName}
@@ -70,7 +80,16 @@ function App() {
           setStep={setStep}
           setFirstPhaseQuestions={setFirstPhaseQuestions}
           setSecondPhaseQuestions={setSecondPhaseQuestions}
-        />) : step == 'admin' ? (<Admin stompClient={stompClient} setStep={setStep} teamList={teamList} />) : (<Exam2 competitionName={competitionName} secondPhaseQuestions={secondPhaseQuestions} setStep={setStep} />)}
+        />) : step == 'admin' ? (<Admin stompClient={stompClient} setStep={setStep} teamList={teamList} />) :
+          (<Exam2
+            competitionName={competitionName}
+            secondPhaseQuestions={secondPhaseQuestions}
+            setStep={setStep}
+            bellRingingTeam={bellRingingTeam}
+            setBellRingingTeam={setBellRingingTeam}
+            setIsConfirmAns={setIsConfirmAns}
+            isConfirmAns={isConfirmAns}
+          />)}
     </div>
   );
 }

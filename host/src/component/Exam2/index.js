@@ -1,22 +1,34 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import ModalExam2 from '../ModalExam2';
 import { useState } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Space, Input} from 'antd';
 import './Exam2.css'
-import {toast} from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 import axiosInstance from '../../importAxios'
 
-const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName }) => {
+const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bellRingingTeam, setBellRingingTeam, setIsConfirmAns, isConfirmAns }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isUpdateScoreModalOpen, setIsUpdateScoreModalOpen] = useState(false)
     const [tmpDataChild, setTmpDataChild] = useState();
     const [zIndicesPiece, setZindicesPiece] = useState(JSON.parse(localStorage.getItem('arrExam2Piece')))
     const [zIndicesNumber, setZindicesNumber] = useState(JSON.parse(localStorage.getItem('arrExam2Number')))
     const arrQuestion = secondPhaseQuestions.secondPhaseQuestions;
     const [indexSelected, setIndexSelected] = useState(-1)
+    const [scorePhaseSecond, setScorePhaseSecond] = useState(0);
     const secondPhaseImage = secondPhaseQuestions.secondPhaseImage;
     const showModal = async () => {
         setIsModalOpen(true)
     }
+
+    const openBell = async () => {
+        const response = await axiosInstance.post(`/bell/open`);
+    } 
+
+    useEffect(() => {
+        setBellRingingTeam({})
+        setIsConfirmAns(false)
+        openBell();
+    }, [])
 
     const handleOk = async () => {
         const newZIndices = [...zIndicesPiece];
@@ -31,6 +43,11 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName }) =
         setIsModalOpen(false)
     }
 
+    const handleOkUpdateScoreModal = () => {
+        handleUpdateScore(scorePhaseSecond)
+        setIsUpdateScoreModalOpen(false)
+    }
+
     const handleCancel = async () => {
         const newZIndices = [...zIndicesNumber]
         newZIndices[indexSelected + 1] = -2;
@@ -39,17 +56,65 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName }) =
         setIsModalOpen(false)
     }
 
+    const handleCancelUpdateScoreModal = () => {
+        setIsUpdateScoreModalOpen(false)
+    }
+
     const handleClick = async (dataChild, index) => {
         if (zIndicesNumber[index + 1] > 0) {
-            setTmpDataChild(dataChild)
+            await setTmpDataChild(dataChild)
             const response = await axiosInstance.post(`/question/${dataChild.id}/start`);
             showModal();
             setIndexSelected(index)
-        } else 
-        {
+        } else {
             toast.error("Không thể chọn mảnh ghép đã trả lời")
         }
     }
+
+    const handleClickRingOpen = async () => {
+        setBellRingingTeam({})
+        setIsConfirmAns(false)
+        const response = await axiosInstance.post(`/bell/open`);
+        console.log("join to handleClickRingOpen");
+        console.log(response.data);
+    }
+
+    const handleUpdateScore = async (score) => {
+        if (score == 0){
+            handleClickRingOpen();
+        }
+        
+        const dataScore = {
+            phase: 2,
+            questionId: tmpDataChild.id,
+            team: bellRingingTeam.id,
+            score: score,
+        }
+        const response = await axiosInstance.post(`/score`, dataScore)
+        localStorage.setItem('summaryTeamScores', JSON.stringify(response.data))
+        toast.success(`Cập nhật điểm thành công`)
+    }
+
+    const handleOpenModalUpdateScore = async () => {
+        console.log(tmpDataChild);
+        setScorePhaseSecond(0);
+        setIsUpdateScoreModalOpen(true)
+    }
+
+    // const handleUpdateScore = async () => {
+    //     let score = 10;
+    //     const dataScore = {
+    //       phase: 1,
+    //       questionId: questionId,
+    //       team: teamIdSelected,
+    //       score: score,
+    //     }
+    //     const response = await axiosInstance.post(`/score`, dataScore)
+    //     localStorage.setItem('summaryTeamScores', JSON.stringify(response.data))
+    //     setIsShowConfirmAnswer(true)
+    //     toast.success(`Cập nhật điểm thành công`)
+
+    //   }
 
     return (
         <>
@@ -143,16 +208,39 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName }) =
                 <h1 style={{ zIndex: zIndicesNumber[11] }} className='piece-text-11'>11</h1>
                 <h1 style={{ zIndex: zIndicesNumber[12] }} className='piece-text-12'>12</h1>
             </div>
-
+            {!bellRingingTeam ?
+                <h1 className='req-ans'>Thông tin đội yêu cầu trả lời câu hỏi</h1> : <h1 className='req-ans'>{bellRingingTeam.name}</h1>}
             <Button
                 style={{ position: 'absolute', top: '0', left: '0' }}
                 onClick={() => setStep('homepage')}
-            >Back To Homepage</Button>
+            >Trở về trang chủ</Button>
+            {/* <Button
+                onClick={handleClickRingOpen}
+                type='primary'
+                style={{ float: 'left', fontSize: '30px', margin: '30px', width: '300px', height: '80px' }}
+            >Mở chuông</Button> */}
+            {isConfirmAns &&
+                <>
+                    <Button
+                        onClick={handleOpenModalUpdateScore}
+                        type='primary'
+                        style={{ float: 'right', fontSize: '20px', marginRight: '10px', width: '200px', height: '50px' }}
+                    >Đúng</Button>
+                    <Button
+                        onClick={() => handleUpdateScore(0)}
+                        type='primary'
+                        danger
+                        style={{ float: 'right', fontSize: '20px', marginRight: '10px', width: '200px', height: '50px' }}
+                    >Sai</Button>
+                </>
+            }
 
             <Modal className='sizeModal' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <ModalExam2 listAnswer={listAnswer} tmpDataChild={tmpDataChild} />
             </Modal>
-
+            <Modal title="Cộng điểm" open={isUpdateScoreModalOpen} onOk={handleOkUpdateScoreModal} onCancel={handleCancelUpdateScoreModal}>
+                <Input name={scorePhaseSecond} value={scorePhaseSecond} onChange={(e) => setScorePhaseSecond(e.target.value)} style={{ height: '50px', fontSize: '40px', textAlign: 'center' }} />
+            </Modal>
 
 
         </>

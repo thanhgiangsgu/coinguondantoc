@@ -10,11 +10,13 @@ import { toast } from 'react-hot-toast'
 const ModalExam2 = (tmpDataChild) => {
     const listAnswer = JSON.parse(localStorage.getItem('listAnswer')) || []
     const info = tmpDataChild.tmpDataChild
-    const [timeLeft, setTimeLeft] = useState(-1);
+    const [timeLeft, setTimeLeft] = useState(-2);
     const [showAns, setShowAns] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isShowAnswer, setIsShowAnswer] = useState(false);
+    const [checkLoading, setCheckLoading] = useState(false);
     const audioRef = useRef(null);
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -27,19 +29,24 @@ const ModalExam2 = (tmpDataChild) => {
 
 
     useEffect(() => {
-        if (timeLeft < 1) {
+        if (checkLoading && timeLeft < 1){
             handleStopQuestion();
-            return
+        }
+        if (timeLeft < 1) {
+            return;
         }
         const timer = setInterval(() => {
-            setTimeLeft(timeLeft - 1)
-        }, 1000)
-        return () => clearInterval(timer)
-    }, [timeLeft])
+            setTimeLeft(timeLeft - 1);
+            setCheckLoading(true)
+        }, 1000);
+        return () => {
+            clearInterval(timer);
+        };
+    }, [timeLeft]); 
 
     useEffect(() => {
         setShowAns("");
-        setTimeLeft(-1)
+        setTimeLeft(-2)
     }, [tmpDataChild])
 
     const handleStopQuestion = async () => {
@@ -69,11 +76,11 @@ const ModalExam2 = (tmpDataChild) => {
     return (
         <div className='modal-container'>
             <audio ref={audioRef}>
-                <source src="countdown20s.mp3" type="audio/mp3" />
+                <source src="/sound/countdown20s.mp3" type="audio/mp3" />
             </audio>
             <Space className='exam2-title'>
                 <h1>HỘI THI TÌM HIỂU LỊCH SỬ CỘI NGUỒN DÂN TỘC LẦN THỨ XV</h1>
-            </Space>
+            </Space> 
             <Space>
                 <h1>HÀNH TRÌNH ĐẾN ĐỊA CHỈ ĐỎ</h1>
             </Space>
@@ -90,7 +97,7 @@ const ModalExam2 = (tmpDataChild) => {
                         <h1>{showAns}</h1>
                     </Space>
                     <Space className='countdown-timer'>
-                        {timeLeft == -1 ? 20 : timeLeft}
+                        {timeLeft == -2 ? 20 : timeLeft}
                     </Space>
                     <Space className='box-control'>
                         <Space direction='vertical'>

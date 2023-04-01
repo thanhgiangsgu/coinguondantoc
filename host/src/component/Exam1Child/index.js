@@ -19,7 +19,7 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [questionId, setQuestionId] = useState(0);
   const audioRef = useRef(null);
-
+ 
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -95,13 +95,14 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
 
   const handleClickCountingTime = () => {
     audioRef.current.play();
+    console.log("sound");
     setTimeLeft(15);
   }
 
   return (
     <div className='exam1-child-container'>
       <audio ref={audioRef}>
-        <source src="countdown15s.mp3" type="audio/mp3" />
+        <source src="/sound/countdown15s.mp3" type="audio/mp3" />
       </audio>
       <Space direction='vertical'>
         <Space className='exam1-title'>
