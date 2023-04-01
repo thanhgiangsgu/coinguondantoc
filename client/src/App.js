@@ -21,6 +21,7 @@ function App() {
   const [stompClient, setStompClient] = useState(null);
   const [score, setScore] = useState(0);
   const [question, setQuestion] = useState({});
+  const [isBell, setIsBell] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
@@ -71,6 +72,7 @@ function App() {
     const body = JSON.stringify({ teamCode })
     stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
       const jsonObject = JSON.parse(greeting.body);
+      console.log(jsonObject);
       if (jsonObject.cmd == "TEAM_CONNECTED") {
         setTeamName(jsonObject.data.name)
         setScore(jsonObject.data.score);
@@ -117,6 +119,15 @@ function App() {
         }, 2000);
 
       }
+      if (jsonObject.cmd == "BELL_OPEN") {
+        setIsBell(true);
+        console.log(isBell);
+      }
+      if (jsonObject.cmd == "BELL_STOP") {
+        setIsBell(false);
+        console.log(isBell);
+      }
+
       if (jsonObject.cmd == "TEAM_SCORE") {
         setPhase(0)
         setScore(jsonObject.data.score)
@@ -150,6 +161,22 @@ function App() {
     stompClient.send('/app/sub', headers, body);
   }
 
+  const handleRingBell = () => {
+    const headers = {};
+    const body = JSON.stringify({ teamCode: teamCode })
+    stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
+      const jsonObject = JSON.parse(greeting.body);
+      console.log(jsonObject);
+    if (jsonObject.cmd == "BELL_OPEN"){
+      setIsBell(true);
+    }
+    if (jsonObject.cmd == "BELL_CLOSE"){
+      setIsBell(false);
+    }
+    })
+    stompClient.send('/app/bell', headers, body);
+  }
+
   return (
     <div>
       {/* <div>
@@ -169,6 +196,8 @@ function App() {
             score={score}
             phase={phase}
             message={message}
+            handleRingBell={handleRingBell}
+            isBell={isBell}
           />
         ) : step === 'loading' ? (
           <Loading />

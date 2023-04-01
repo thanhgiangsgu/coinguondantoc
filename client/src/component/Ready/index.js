@@ -4,8 +4,9 @@ import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs';
 import { useState, useEffect } from 'react'
 import { message } from 'antd';
+import {Button} from 'antd'
 
-const Ready = ({ teamName, score, phase, message }) => {
+const Ready = ({ teamName, score, phase, message, handleRingBell, isBell }) => {
   if (phase == 0) {
     return (
       <div className="container">
@@ -15,6 +16,7 @@ const Ready = ({ teamName, score, phase, message }) => {
           <br></br>
           <h6 style={{ float: 'right' }}>Điểm hiện tại : {score}</h6>
         </div>
+        {isBell && <Button onClick={handleRingBell} >Giành quyền trả lời</Button>}
       </div>
     );
   } else if (phase == 1) {
@@ -36,6 +38,7 @@ const Ready = ({ teamName, score, phase, message }) => {
       <div className="container">
         <div className="box-title">
           <h1>PHẦN THI THỨ 2</h1>
+          {isBell && <Button onClick={handleRingBell} >Giành quyền trả lời</Button>}
         </div>
       </div>
     )
