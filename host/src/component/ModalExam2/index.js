@@ -29,7 +29,7 @@ const ModalExam2 = (tmpDataChild) => {
 
 
     useEffect(() => {
-        if (checkLoading && timeLeft < 1){
+        if (checkLoading && timeLeft < 1) {
             handleStopQuestion();
         }
         if (timeLeft < 1) {
@@ -42,7 +42,7 @@ const ModalExam2 = (tmpDataChild) => {
         return () => {
             clearInterval(timer);
         };
-    }, [timeLeft]); 
+    }, [timeLeft]);
 
     useEffect(() => {
         setShowAns("");
@@ -80,14 +80,14 @@ const ModalExam2 = (tmpDataChild) => {
             </audio>
             <Space className='exam2-title'>
                 <h1>HỘI THI TÌM HIỂU LỊCH SỬ CỘI NGUỒN DÂN TỘC LẦN THỨ XV</h1>
-            </Space> 
+            </Space>
             <Space>
                 <h1>HÀNH TRÌNH ĐẾN ĐỊA CHỈ ĐỎ</h1>
             </Space>
 
             <Space>
                 <Space className='show-question'>
-                    <h3 className='question-content'><span className='question-order'>{info.name}: </span>{info.content}</h3>
+                    <pre className='question-content' style={{ whiteSpace: 'pre-wrap' }}><span className='question-order'>{info.name}: </span>{info.content}</pre>
                 </Space>
             </Space>
 

@@ -10,7 +10,9 @@ const CompetitionManage = ({ stompClient, teamList }) => {
     const initArr = new Array(100).fill(3);
     const [competitionList, setCompetitionList] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCompetitionTitleUpdateModalOpen,  setIsCompetitionTitleUpdateModalOpen] = useState(false)
     const [name, setName] = useState('');
+    const [nameUpdate, setNameUpdate] = useState('')
     const [titleButtonStartCompetition, setTitleButtonStartCompetition] = useState("Bắt đầu")
     const [typeButtonStartCompetition, setTypeButtonStartCompetition] = useState("primary")
     const [selectedCompetition, setSelectedCompetition] = useState(0);
@@ -18,6 +20,7 @@ const CompetitionManage = ({ stompClient, teamList }) => {
     const [isDisableShowListTeam, setIsDisableShowListTeam] = useState(true);
     const [isTeamListModal, setTeamListModal] = useState(false);
     const [listTeamData, setListTeamData] = useState([]);
+    const [teamSelecting, setTeamSelecting] = useState({})
     const showModalTeamList = () => {
         setIsModalOpen(true);
     };
@@ -26,9 +29,19 @@ const CompetitionManage = ({ stompClient, teamList }) => {
         setTeamListModal(false);
     };
 
+    const handleOkUpdateCompetition = () => {
+        setNameUpdate("");
+        setIsCompetitionTitleUpdateModalOpen(false)
+    }
+
     const teamListHandleCancel = () => {
         setTeamListModal(false);
     };
+
+    const handleCancelUpdateCompetition = () => {
+        setNameUpdate('')
+        setIsCompetitionTitleUpdateModalOpen(false)
+    }
     const fetchTeamList = async () => {
         try {
             const response = await axiosInstance.get('/competition');
@@ -105,14 +118,26 @@ const CompetitionManage = ({ stompClient, teamList }) => {
             setListTeamData([]);
             localStorage.removeItem('dataCompetition')
             setIsDisableShowListTeam(true)
-        }
+        }   
     }
 
     const handleShowModalTeamList = () => {
         setTeamListModal(true)
     }
 
+    const handleUpdateCompetition = async (team) => {
+        console.log(team); 
+        setNameUpdate(team.name)
+        await setTeamSelecting(team);
 
+        const newCompetitionList = [...competitionList];
+        
+        setIsCompetitionTitleUpdateModalOpen(true)
+    }
+
+    const handleDeleteCompetition = () => {
+
+    }
 
     return (
         <Space direction='vertical' className='competition-mamage-container'>
@@ -123,6 +148,8 @@ const CompetitionManage = ({ stompClient, teamList }) => {
                     <Space className='competition-item'>
                         <h5>{team.name}</h5>
                         <Button disabled={team.id != selectedCompetition && selectedCompetition != 0} onClick={() => handleStartCompetition(team.id)} type={typeButtonStartCompetition}>{titleButtonStartCompetition}</Button>
+                        {/* <Button disabled={team.id != selectedCompetition && selectedCompetition != 0} onClick={() => handleUpdateCompetition(team)} >Sửa</Button>
+                        <Button disabled={team.id != selectedCompetition && selectedCompetition != 0} onClick={() => handleDeleteCompetition(team.id)} type="primary" danger ghost>Xóa</Button>        */}
                     </Space>
                 ))}
 
@@ -131,6 +158,10 @@ const CompetitionManage = ({ stompClient, teamList }) => {
             <Modal title="Nhập tên cuộc thi" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <Input value={name} onChange={(e) => setName(e.target.value)} />
             </Modal>
+
+            {/* <Modal title="Sửa tên cuộc thi" open={isCompetitionTitleUpdateModalOpen} onOk={handleOkUpdateCompetition} onCancel={handleCancelUpdateCompetition}>
+                <Input value={nameUpdate} onChange={(e) => setNameUpdate(e.target.value)} />
+            </Modal> */}
 
             <Modal title="Basic Modal" open={isTeamListModal} onOk={teamListhandleOk} onCancel={teamListHandleCancel}>
                 <Space direction="vertical">
@@ -154,11 +185,11 @@ const CompetitionManage = ({ stompClient, teamList }) => {
                                 )
                             })}
                         </Space>
-
-
                     </Space>
                 </Space>
             </Modal>
+
+                            
         </Space>
     )
 }

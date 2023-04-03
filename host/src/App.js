@@ -56,7 +56,7 @@ function App() {
   return (
     <div>
       <audio ref={audioRef}>
-        <source src="/sound/bell.mp3" type="audio/mp3" />
+         ="/sound/bell.mp3" type="audio/mp3" />
       </audio>
       {step == 'exam1' ? (
         <Exam1
