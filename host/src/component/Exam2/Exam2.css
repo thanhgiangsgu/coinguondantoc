@@ -327,8 +327,16 @@
   top: 300px;
 }
 
+.bell-item{
+  display: flex;
+  justify-content: center;
+}
+
 .req-ans{
   text-align: center;
+}
+.bell-item .bell-img{
+  width: 80px;
 }
 
 

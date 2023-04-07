@@ -7,15 +7,17 @@ import { toast } from 'react-hot-toast'
 
 
 
-const ModalExam2 = (tmpDataChild) => {
+const ModalExam2 = ({tmpDataChild, competitionName}) => {
     const listAnswer = JSON.parse(localStorage.getItem('listAnswer')) || []
-    const info = tmpDataChild.tmpDataChild
+    const info = tmpDataChild
     const [timeLeft, setTimeLeft] = useState(-2);
     const [showAns, setShowAns] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isShowAnswer, setIsShowAnswer] = useState(false);
     const [checkLoading, setCheckLoading] = useState(false);
     const audioRef = useRef(null);
+
+    console.log(competitionName);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -30,7 +32,9 @@ const ModalExam2 = (tmpDataChild) => {
 
     useEffect(() => {
         if (checkLoading && timeLeft < 1) {
-            handleStopQuestion();
+            setTimeout(() => {
+                handleStopQuestion();
+            }, 4000);
         }
         if (timeLeft < 1) {
             return;
@@ -79,7 +83,7 @@ const ModalExam2 = (tmpDataChild) => {
                 <source src="/sound/countdown20s.mp3" type="audio/mp3" />
             </audio>
             <Space className='exam2-title'>
-                <h1>HỘI THI TÌM HIỂU LỊCH SỬ CỘI NGUỒN DÂN TỘC LẦN THỨ XV</h1>
+                <h1>HỘI THI</h1>
             </Space>
             <Space>
                 <h1>HÀNH TRÌNH ĐẾN ĐỊA CHỈ ĐỎ</h1>
@@ -122,8 +126,15 @@ const ModalExam2 = (tmpDataChild) => {
                             return (
                                 <div className='answer-item'>
                                     <h2 className='team-name'>{answerItem.name}</h2>
-                                    <h3 className='team-answer'>{isShowAnswer ? (answerItem.answer !== "" ? answerItem.answer : "Chưa đưa ra câu trả lời") : "Câu trả lời đã được ẩn"}</h3>
-                                    <Button onClick={() => handleUpdateScore(true, answerItem.id, answerItem.name)} style={{ float: 'right' }} type='primary'>Đúng</Button> <Button onClick={() => handleUpdateScore(false, answerItem.id, answerItem.name)} style={{ float: 'right' }} type='primary' danger>Sai</Button>
+                                    <Space direction='horizontal' style={{ width: '1000', display: "flex", justifyContent: 'space-between' }}>
+                                        <h3 className={`team-answer ${isShowAnswer ? (answerItem.answer !== "" ? "has-answer" : "no-answer") : "hidden"}`}>
+                                            {isShowAnswer ? (answerItem.answer !== "" ? answerItem.answer : "Chưa đưa ra câu trả lời") : "Câu trả lời đã được ẩn"}
+                                        </h3>
+                                        <Space direction='horizontal'>
+                                            <Button onClick={() => handleUpdateScore(true, answerItem.id, answerItem.name)} style={{ float: 'right', width: '100px', height: '50px', fontSize: '25px' }} type='primary'>Đúng</Button>
+                                            <Button onClick={() => handleUpdateScore(false, answerItem.id, answerItem.name)} style={{ float: 'right', width: '100px', height: '50px', fontSize: '25px'  }} type='primary' danger>Sai</Button>
+                                        </Space>
+                                    </Space>
                                 </div>
                             )
                         })}

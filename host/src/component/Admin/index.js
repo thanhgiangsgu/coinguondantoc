@@ -6,7 +6,7 @@ import TeamManage from '../TeamManage';
 
 
 
-const Admin = ({setStep, teamList}) => {
+const Admin = ({setStep, teamList, setTeamList}) => {
 
   const item = new Array(3);
 item[0] = {
@@ -18,7 +18,7 @@ item[0] = {
 item[1] = {
   label: `Quản lý cuộc thi`,
   key: 2,
-  children: <CompetitionManage teamList={teamList}/>,
+  children: <CompetitionManage teamList={teamList} setTeamList={setTeamList}/>,
   style: 2 === 0 ? { height: 200 } : undefined,
 }
 item[2] = {

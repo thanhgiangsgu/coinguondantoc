@@ -24,6 +24,7 @@ const HomePage = ({ setStep, setFirstPhaseQuestions, setSecondPhaseQuestions, co
     axiosInstance.post('/user/login', info)
       .then(response => {
         const { jwt, type } = response.data;
+        console.log(jwt);
         localStorage.setItem("token", jwt)
         toast.success("Đăng nhập thành công", { position: 'top-right' })
         setStep('admin')

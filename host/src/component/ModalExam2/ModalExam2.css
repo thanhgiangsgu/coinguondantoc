@@ -30,12 +30,15 @@
 }
 
 .modal-container .show-question .question-content{
-    font-size: 30px;
+    font-size: 40px;
+    color: chocolate;
+    font-weight: 900;
 }
 
 .modal-container .ans-box{
     width: 700px;
-    font-size: 15px;
+    font-size: 20px;
+    color: brown;
 }
 
 .modal-container .box-control{
@@ -71,4 +74,17 @@
     font-weight: 900;
     color: midnightblue;
     font-size: 20px;
+}
+
+.list-answer .has-answer{
+    font-weight: 600;
+    font-size: 30px;
+    text-shadow: 1px 1px;
+    color: mediumorchid;
+
+}
+
+.list-answer .no-answer{
+    color: burlywood;
+    font-size: 25px;
 }

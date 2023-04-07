@@ -6,7 +6,7 @@ import {toast} from 'react-hot-toast'
 import './CompetitionManage.css'
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs';
-const CompetitionManage = ({ stompClient, teamList }) => {
+const CompetitionManage = ({ stompClient, teamList , setTeamList}) => {
     const initArr = new Array(100).fill(3);
     const [competitionList, setCompetitionList] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +22,7 @@ const CompetitionManage = ({ stompClient, teamList }) => {
     const [listTeamData, setListTeamData] = useState([]);
     const [teamSelecting, setTeamSelecting] = useState({})
     const showModalTeamList = () => {
-        setIsModalOpen(true);
+        setIsModalOpen(true); 
     };
 
     const teamListhandleOk = () => {
@@ -92,6 +92,7 @@ const CompetitionManage = ({ stompClient, teamList }) => {
                 setIsDisableShowListTeam(false)
                 localStorage.setItem('dataCompetition', JSON.stringify(data));
                 toast.success(`Bắt đầu cuộc thi ${data.name}`)
+                setTeamList([])
             })
             .catch(error => {
                 toast.error("Xảy ra lỗi", {position: 'top-right'})

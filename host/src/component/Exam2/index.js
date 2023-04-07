@@ -16,6 +16,11 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bel
     const [indexSelected, setIndexSelected] = useState(-1)
     const [scorePhaseSecond, setScorePhaseSecond] = useState(0);
     const secondPhaseImage = secondPhaseQuestions.secondPhaseImage;
+    
+    
+
+
+    console.log(competitionName);
     const showModal = async () => {
         setIsModalOpen(true)
     }
@@ -208,8 +213,12 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bel
                 <h1 style={{ zIndex: zIndicesNumber[11] }} className='piece-text-11'>11</h1>
                 <h1 style={{ zIndex: zIndicesNumber[12] }} className='piece-text-12'>12</h1>
             </div>
-            {!bellRingingTeam ?
-                <h1 className='req-ans'>Thông tin đội yêu cầu trả lời câu hỏi</h1> : <h1 className='req-ans'>{bellRingingTeam.name}</h1>}
+            {!bellRingingTeam.name ?
+                <h1 className='req-ans'>Thông tin đội yêu cầu trả lời câu hỏi</h1> : 
+                <Space direction='horizontal' className='bell-item'>
+                    <img className='bell-img' src='img/bell.png'></img>
+                    <h1 className='req-ans'>{bellRingingTeam.name}</h1>    
+                </Space>}
             <Button
                 style={{ position: 'absolute', top: '0', left: '0' }}
                 onClick={() => setStep('homepage')}
@@ -236,7 +245,7 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bel
             }
 
             <Modal className='sizeModal' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <ModalExam2 listAnswer={listAnswer} tmpDataChild={tmpDataChild} />
+                <ModalExam2 competitionName={competitionName} listAnswer={listAnswer} tmpDataChild={tmpDataChild} />
             </Modal>
             <Modal title="Cộng điểm" open={isUpdateScoreModalOpen} onOk={handleOkUpdateScoreModal} onCancel={handleCancelUpdateScoreModal}>
                 <Input name={scorePhaseSecond} value={scorePhaseSecond} onChange={(e) => setScorePhaseSecond(e.target.value)} style={{ height: '50px', fontSize: '40px', textAlign: 'center' }} />

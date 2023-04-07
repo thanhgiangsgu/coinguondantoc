@@ -56,7 +56,7 @@ function App() {
   return (
     <div>
       <audio ref={audioRef}>
-         ="/sound/bell.mp3" type="audio/mp3" />
+        <source src="/sound/bell.mp3" type="audio/mp3" />
       </audio>
       {step == 'exam1' ? (
         <Exam1
@@ -80,7 +80,7 @@ function App() {
           setStep={setStep}
           setFirstPhaseQuestions={setFirstPhaseQuestions}
           setSecondPhaseQuestions={setSecondPhaseQuestions}
-        />) : step == 'admin' ? (<Admin stompClient={stompClient} setStep={setStep} teamList={teamList} />) :
+        />) : step == 'admin' ? (<Admin setTeamList={setTeamList} stompClient={stompClient} setStep={setStep} teamList={teamList} />) :
           (<Exam2
             competitionName={competitionName}
             secondPhaseQuestions={secondPhaseQuestions}
