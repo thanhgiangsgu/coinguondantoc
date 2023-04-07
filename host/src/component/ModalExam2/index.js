@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast'
 
 
 
+
 const ModalExam2 = ({tmpDataChild, competitionName}) => {
     const listAnswer = JSON.parse(localStorage.getItem('listAnswer')) || []
     const info = tmpDataChild
@@ -83,7 +84,7 @@ const ModalExam2 = ({tmpDataChild, competitionName}) => {
                 <source src="/sound/countdown20s.mp3" type="audio/mp3" />
             </audio>
             <Space className='exam2-title'>
-                <h1>HỘI THI</h1>
+                <h1>{competitionName}</h1>
             </Space>
             <Space>
                 <h1>HÀNH TRÌNH ĐẾN ĐỊA CHỈ ĐỎ</h1>

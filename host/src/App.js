@@ -8,6 +8,9 @@ import Admin from './component/Admin';
 
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs';
+import './fonts.css';
+import './index.css'
+
 
 var stompClient = null;
 

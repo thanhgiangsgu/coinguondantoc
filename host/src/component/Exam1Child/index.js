@@ -126,7 +126,7 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
                 <h6>Câu hỏi</h6>
               </Space>
               <Space className='show-ques'>
-                <h1>{ques}</h1>
+                <h1 style={{fontSize: '35px', color: 'crimson'}}>{ques}</h1>
               </Space>
 
 
@@ -140,7 +140,7 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
               </Space>
               <Space>
                 <Space className='show-ans'>
-                  <h1>{ans}</h1>
+                  <h1 style={{fontSize: '35px', color: 'blue'}}>{ans}</h1>
 
                 </Space>
 
