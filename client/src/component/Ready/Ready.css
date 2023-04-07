@@ -38,22 +38,3 @@
     border-right: 4px soild black;
 }
 
-
-
-@keyframes typeh1 {
-    0% {
-        width: 0ch;
-    }
-    100% {
-        width: 22ch;
-    }
-}
-
-@keyframes typeh6 {
-    0% {
-        width: 0ch;
-    }
-    100% {
-        width: 37ch;
-    }
-}

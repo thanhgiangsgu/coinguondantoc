@@ -10,7 +10,7 @@ const ShowQuestion = ({ question, sendAnswerToServer }) => {
       <div className="box-title">
         <h3>{question.name}</h3>
         <br></br>
-        <h6>{question.content}</h6>
+        <h6 style={{color: 'crimson'}}>{question.content}</h6>
         <TextArea value={answer} onChange={(e) => setAnswer(e.target.value)} cols={60} rows={5} className='input-answer' />
         <Button onClick={() => sendAnswerToServer(answer)} type='primary' className='button-answer'>GỬI CÂU TRẢ LỜI</Button>
       </div>
