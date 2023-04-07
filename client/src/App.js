@@ -9,6 +9,7 @@ import { toast, Toaster } from 'react-hot-toast';
 import { useState, useEffect } from 'react';
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs';
+import './fonts.css'
 
 var stompClient = null;
 
