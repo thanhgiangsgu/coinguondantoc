@@ -6,7 +6,7 @@ import {toast} from 'react-hot-toast'
 import './CompetitionManage.css'
 import SockJS from 'sockjs-client'
 import { Stomp } from '@stomp/stompjs';
-const CompetitionManage = ({ stompClient, teamList , setTeamList}) => {
+const CompetitionManage = ({ stompClient, teamList, setTeamList }) => {
     const initArr = new Array(100).fill(3);
     const [competitionList, setCompetitionList] = useState([])
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -110,6 +110,7 @@ const CompetitionManage = ({ stompClient, teamList , setTeamList}) => {
             localStorage.setItem("arrExam1", JSON.stringify(initArr))
             localStorage.setItem("arrExam2Piece", JSON.stringify(initArr))
             localStorage.setItem("arrExam2Number", JSON.stringify(initArr))
+            localStorage.removeItem('teamList')
 
         } else {
             setSelectedCompetition(0)

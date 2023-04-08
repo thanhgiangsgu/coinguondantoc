@@ -30,6 +30,32 @@ function App() {
     console.log("khong ton tai");
     localStorage.setItem('summaryTeamScores', JSON.stringify(competition.teams) || []);
   }
+
+  const updateTeamList = (jsonObject) => {
+    // console.log("join to team connected");
+    // const newTeamList = [...teamList];
+    // console.log("newTeamList : " , newTeamList);
+    // newTeamList.push(jsonObject);
+    // console.log("newTeamList after update : " , newTeamList);
+    // setTeamList(newTeamList);
+    // console.log("teamList after update : " , teamList);
+    const newTeamList = JSON.parse(localStorage.getItem('teamList')) || [];
+    let check = true;
+    console.log(jsonObject);
+    newTeamList.forEach(element => {
+      console.log(element);
+      if (element.data.id == jsonObject.data.id){
+        console.log("co vao day");
+        check = false;
+      }
+    });
+    if (check) {
+      newTeamList.push(jsonObject)
+    }
+    localStorage.setItem('teamList', JSON.stringify(newTeamList))
+    setTeamList(newTeamList)
+  }
+  
   useEffect(() => {
     var socket = new SockJS('http://14.225.192.174:8111/gs-guide-websocket');
     const stompClient = Stomp.over(socket)
@@ -37,10 +63,9 @@ function App() {
       setStompClient(stompClient)
       stompClient.subscribe('/topic/host', function (message) {
         const jsonObject = JSON.parse(message.body);
+        console.log(jsonObject);
         if (jsonObject.cmd == "TEAM_CONNECTED") {
-          const newTeamList = [...teamList];
-          newTeamList.push(jsonObject)
-          setTeamList(newTeamList)
+          updateTeamList(jsonObject)
         }
         if (jsonObject.cmd == "TEAM_ANSWER") {
           localStorage.removeItem('listAnswer')
@@ -54,7 +79,7 @@ function App() {
         // setListTeamData(prevListTeamData => [...prevListTeamData, teamCode]);
       });
     })
-  }, [teamList])
+  }, [])
 
   return (
     <div>
