@@ -18,9 +18,9 @@ const ShowQuestion = ({ question, sendAnswerToServer }) => {
   ) : (
     <div className="container">
       <div className="box-title">
-        <h3>{question.name}</h3>
+        <h2>{question.name}</h2>
         <br></br>
-        <h6>{question.content}</h6>
+        <h4 style={{color: 'crimson'}}>{question.content}</h4>
       </div>
     </div>
   );
