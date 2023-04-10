@@ -95,7 +95,6 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
 
   const handleClickCountingTime = () => {
     audioRef.current.play();
-    console.log("sound");
     setTimeLeft(15);
   }
 

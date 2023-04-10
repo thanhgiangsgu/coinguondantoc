@@ -128,7 +128,6 @@ const CompetitionManage = ({ stompClient, teamList, setTeamList }) => {
     }
 
     const handleUpdateCompetition = async (team) => {
-        console.log(team); 
         setNameUpdate(team.name)
         await setTeamSelecting(team);
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import ModalExam2 from '../ModalExam2';
 import { useState } from 'react';
-import { Modal, Button, Space, Input} from 'antd';
+import { Modal, Button, Space, Input } from 'antd';
 import './Exam2.css'
 import { toast } from 'react-hot-toast'
 import axiosInstance from '../../importAxios'
@@ -16,18 +16,17 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bel
     const [indexSelected, setIndexSelected] = useState(-1)
     const [scorePhaseSecond, setScorePhaseSecond] = useState(0);
     const secondPhaseImage = secondPhaseQuestions.secondPhaseImage;
-    
-    
 
 
-    console.log(competitionName);
+
+
     const showModal = async () => {
         setIsModalOpen(true)
     }
 
     const openBell = async () => {
         const response = await axiosInstance.post(`/bell/open`);
-    } 
+    }
 
     useEffect(() => {
         setBellRingingTeam({})
@@ -76,19 +75,24 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bel
         }
     }
 
+    const handleClickAnswered = async (dataChild, index) => {
+        await setTmpDataChild(dataChild)
+        const response = await axiosInstance.post(`/question/${dataChild.id}/start`);
+        showModal();
+        setIndexSelected(index)
+    }
+
     const handleClickRingOpen = async () => {
         setBellRingingTeam({})
         setIsConfirmAns(false)
         const response = await axiosInstance.post(`/bell/open`);
-        console.log("join to handleClickRingOpen");
-        console.log(response.data);
     }
 
     const handleUpdateScore = async (score) => {
-        if (score == 0){
+        if (score == 0) {
             handleClickRingOpen();
         }
-        
+
         const dataScore = {
             phase: 2,
             questionId: tmpDataChild.id,
@@ -101,7 +105,6 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bel
     }
 
     const handleOpenModalUpdateScore = async () => {
-        console.log(tmpDataChild);
         setScorePhaseSecond(0);
         setIsUpdateScoreModalOpen(true)
     }
@@ -123,101 +126,141 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bel
 
     return (
         <>
-            <div className='exam2-container'>
-                <img className='img-hide' src={secondPhaseImage}>
-                </img>
-                <div
-                    style={{ zIndex: zIndicesPiece[1] }}
-                    onClick={() => handleClick(arrQuestion[0], 0)}
-                    className='piece-1' >
+            <Space className='ancvoasd;l' style={{width: '100%', display: 'flex' , justifyContent: 'center'}}>
+                <div className='exam2-container'>
+                    <img className='img-hide' src={secondPhaseImage}>
+                    </img>
+                    <div
+                        style={{ zIndex: zIndicesPiece[1] }}
+                        onClick={() => handleClick(arrQuestion[0], 0)}
+                        className='piece-1' >
 
+                    </div>
+                    <div
+                        style={{ zIndex: zIndicesPiece[2] }}
+                        onClick={() => handleClick(arrQuestion[1], 1)}
+                        className='piece piece-2'
+                    >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[2], 2)}
+                        style={{ zIndex: zIndicesPiece[3] }}
+                        className='piece piece-3' >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[3], 3)}
+                        style={{ zIndex: zIndicesPiece[4] }}
+                        className='piece piece-4' >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[4], 4)}
+                        style={{ zIndex: zIndicesPiece[5] }}
+                        className='piece piece-5' >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[5], 5)}
+                        style={{ zIndex: zIndicesPiece[6] }}
+                        className='piece piece-6' >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[6], 6)}
+                        style={{ zIndex: zIndicesPiece[7] }}
+                        className='piece piece-7' >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[7], 7)}
+                        style={{ zIndex: zIndicesPiece[8] }}
+                        className='piece piece-8' >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[8], 8)}
+                        style={{ zIndex: zIndicesPiece[9] }}
+                        className='piece piece-9' >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[9], 9)}
+                        style={{ zIndex: zIndicesPiece[10] }}
+                        className='piece piece-10' >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[10], 10)}
+                        style={{ zIndex: zIndicesPiece[11] }}
+                        className='piece piece-11' >
+
+                    </div>
+                    <div
+                        onClick={() => handleClick(arrQuestion[11], 11)}
+                        style={{ zIndex: zIndicesPiece[12] }}
+                        className='piece piece-12' >
+
+                    </div>
+
+                    <h1 style={{ zIndex: zIndicesNumber[1] }} className='piece-text-1'>1</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[2] }} className='piece-text-2'>2</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[3] }} className='piece-text-3'>3</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[4] }} className='piece-text-4'>4</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[5] }} className='piece-text-5'>5</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[6] }} className='piece-text-6'>6</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[7] }} className='piece-text-7'>7</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[8] }} className='piece-text-8'>8</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[9] }} className='piece-text-9'>9</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[10] }} className='piece-text-10'>10</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[11] }} className='piece-text-11'>11</h1>
+                    <h1 style={{ zIndex: zIndicesNumber[12] }} className='piece-text-12'>12</h1>
                 </div>
-                <div
-                    style={{ zIndex: zIndicesPiece[2] }}
-                    onClick={() => handleClick(arrQuestion[1], 1)}
-                    className='piece piece-2'
-                >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[2], 2)}
-                    style={{ zIndex: zIndicesPiece[3] }}
-                    className='piece piece-3' >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[3], 3)}
-                    style={{ zIndex: zIndicesPiece[4] }}
-                    className='piece piece-4' >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[4], 4)}
-                    style={{ zIndex: zIndicesPiece[5] }}
-                    className='piece piece-5' >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[5], 5)}
-                    style={{ zIndex: zIndicesPiece[6] }}
-                    className='piece piece-6' >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[6], 6)}
-                    style={{ zIndex: zIndicesPiece[7] }}
-                    className='piece piece-7' >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[7], 7)}
-                    style={{ zIndex: zIndicesPiece[8] }}
-                    className='piece piece-8' >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[8], 8)}
-                    style={{ zIndex: zIndicesPiece[9] }}
-                    className='piece piece-9' >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[9], 9)}
-                    style={{ zIndex: zIndicesPiece[10] }}
-                    className='piece piece-10' >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[10], 10)}
-                    style={{ zIndex: zIndicesPiece[11] }}
-                    className='piece piece-11' >
-
-                </div>
-                <div
-                    onClick={() => handleClick(arrQuestion[11], 11)}
-                    style={{ zIndex: zIndicesPiece[12] }}
-                    className='piece piece-12' >
-
-                </div>
-
-                <h1 style={{ zIndex: zIndicesNumber[1] }} className='piece-text-1'>1</h1>
-                <h1 style={{ zIndex: zIndicesNumber[2] }} className='piece-text-2'>2</h1>
-                <h1 style={{ zIndex: zIndicesNumber[3] }} className='piece-text-3'>3</h1>
-                <h1 style={{ zIndex: zIndicesNumber[4] }} className='piece-text-4'>4</h1>
-                <h1 style={{ zIndex: zIndicesNumber[5] }} className='piece-text-5'>5</h1>
-                <h1 style={{ zIndex: zIndicesNumber[6] }} className='piece-text-6'>6</h1>
-                <h1 style={{ zIndex: zIndicesNumber[7] }} className='piece-text-7'>7</h1>
-                <h1 style={{ zIndex: zIndicesNumber[8] }} className='piece-text-8'>8</h1>
-                <h1 style={{ zIndex: zIndicesNumber[9] }} className='piece-text-9'>9</h1>
-                <h1 style={{ zIndex: zIndicesNumber[10] }} className='piece-text-10'>10</h1>
-                <h1 style={{ zIndex: zIndicesNumber[11] }} className='piece-text-11'>11</h1>
-                <h1 style={{ zIndex: zIndicesNumber[12] }} className='piece-text-12'>12</h1>
-            </div>
+                <Space direction='vertical' className='list-answered'>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[1] > 0} onClick={() => handleClickAnswered(arrQuestion[0], 0)}>Mảnh số 1</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[2] > 0} onClick={() => handleClickAnswered(arrQuestion[1], 1)}>Mảnh số 2</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[3] > 0} onClick={() => handleClickAnswered(arrQuestion[2], 2)}>Mảnh số 3</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[4] > 0} onClick={() => handleClickAnswered(arrQuestion[3], 3)}>Mảnh số 4</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[5] > 0} onClick={() => handleClickAnswered(arrQuestion[4], 4)}>Mảnh số 5</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[6] > 0} onClick={() => handleClickAnswered(arrQuestion[5], 5)}>Mảnh số 6</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[7] > 0} onClick={() => handleClickAnswered(arrQuestion[6], 6)}>Mảnh số 7</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[8] > 0} onClick={() => handleClickAnswered(arrQuestion[7], 7)}>Mảnh số 8</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[9] > 0} onClick={() => handleClickAnswered(arrQuestion[8], 8)}>Mảnh số 9</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[10] > 0} onClick={() => handleClickAnswered(arrQuestion[9], 9)}>Mảnh số 10</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[11] > 0} onClick={() => handleClickAnswered(arrQuestion[10], 10)}>Mảnh số 11</Button>
+                    <Button 
+                    type='primary' style={{width: '200px' , height: '40px', fontSize: '20px'}}
+                    disabled={zIndicesNumber[12] > 0} onClick={() => handleClickAnswered(arrQuestion[11], 11)}>Mảnh số 12</Button>
+                </Space>
+            </Space>
             {!bellRingingTeam.name ?
-                <h1 className='req-ans'>Thông tin đội yêu cầu trả lời câu hỏi</h1> : 
+                <h1 className='req-ans'>Thông tin đội yêu cầu trả lời câu hỏi</h1> :
                 <Space direction='horizontal' className='bell-item'>
                     <img className='bell-img' src='img/bell.png'></img>
-                    <h1 className='req-ans'>{bellRingingTeam.name}</h1>    
+                    <h1 className='req-ans'>{bellRingingTeam.name}</h1>
                 </Space>}
             <Button
                 style={{ position: 'absolute', top: '0', left: '0' }}
@@ -245,7 +288,7 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bel
             }
 
             <Modal className='sizeModal' open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <ModalExam2 competitionName={competitionName} listAnswer={listAnswer} tmpDataChild={tmpDataChild} />
+                <ModalExam2 competitionName={competitionName} listAnswer={listAnswer} tmpDataChild={tmpDataChild} isLoad={false}/>
             </Modal>
             <Modal title="Cộng điểm" open={isUpdateScoreModalOpen} onOk={handleOkUpdateScoreModal} onCancel={handleCancelUpdateScoreModal}>
                 <Input name={scorePhaseSecond} value={scorePhaseSecond} onChange={(e) => setScorePhaseSecond(e.target.value)} style={{ height: '50px', fontSize: '40px', textAlign: 'center' }} />

@@ -27,25 +27,14 @@ function App() {
   const [isConfirmAns, setIsConfirmAns] = useState(false);
   const audioRef = useRef();
   if (!localStorage.getItem('summaryTeamScores')) {
-    console.log("khong ton tai");
     localStorage.setItem('summaryTeamScores', JSON.stringify(competition.teams) || []);
   }
 
   const updateTeamList = (jsonObject) => {
-    // console.log("join to team connected");
-    // const newTeamList = [...teamList];
-    // console.log("newTeamList : " , newTeamList);
-    // newTeamList.push(jsonObject);
-    // console.log("newTeamList after update : " , newTeamList);
-    // setTeamList(newTeamList);
-    // console.log("teamList after update : " , teamList);
     const newTeamList = JSON.parse(localStorage.getItem('teamList')) || [];
     let check = true;
-    console.log(jsonObject);
     newTeamList.forEach(element => {
-      console.log(element);
       if (element.data.id == jsonObject.data.id){
-        console.log("co vao day");
         check = false;
       }
     });
@@ -63,7 +52,6 @@ function App() {
       setStompClient(stompClient)
       stompClient.subscribe('/topic/host', function (message) {
         const jsonObject = JSON.parse(message.body);
-        console.log(jsonObject);
         if (jsonObject.cmd == "TEAM_CONNECTED") {
           updateTeamList(jsonObject)
         }

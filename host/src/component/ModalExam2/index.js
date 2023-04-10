@@ -8,17 +8,15 @@ import { toast } from 'react-hot-toast'
 
 
 
-const ModalExam2 = ({tmpDataChild, competitionName}) => {
+const ModalExam2 = ({tmpDataChild, competitionName , isLoad}) => {
     const listAnswer = JSON.parse(localStorage.getItem('listAnswer')) || []
     const info = tmpDataChild
     const [timeLeft, setTimeLeft] = useState(-2);
     const [showAns, setShowAns] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isShowAnswer, setIsShowAnswer] = useState(false);
-    const [checkLoading, setCheckLoading] = useState(false);
+    const [checkLoading, setCheckLoading] = useState(isLoad);
     const audioRef = useRef(null);
-
-    console.log(competitionName);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -32,7 +30,7 @@ const ModalExam2 = ({tmpDataChild, competitionName}) => {
 
 
     useEffect(() => {
-        if (checkLoading && timeLeft < 1) {
+        if (checkLoading && timeLeft < 1 && timeLeft != -2) {
             setTimeout(() => {
                 handleStopQuestion();
             }, 4000);
