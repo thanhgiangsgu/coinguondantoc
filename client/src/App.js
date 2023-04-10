@@ -73,7 +73,6 @@ function App() {
     const body = JSON.stringify({ teamCode })
     stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
       const jsonObject = JSON.parse(greeting.body);
-      console.log(jsonObject);
       if (jsonObject.cmd == "TEAM_CONNECTED") {
         setTeamName(jsonObject.data.name)
         setScore(jsonObject.data.score);
@@ -122,17 +121,14 @@ function App() {
       }
       if (jsonObject.cmd == "BELL_OPEN") {
         setIsBell(true);
-        console.log(isBell);
       }
       if (jsonObject.cmd == "BELL_STOP") {
         setIsBell(false);
-        console.log(isBell);
       }
 
       if (jsonObject.cmd == "TEAM_SCORE") {
         setPhase(0)
         setScore(jsonObject.data.score)
-        console.log(jsonObject.data.newScore);
         if (jsonObject.data.newScore == 0) {
           toast.error(`Chia buồn ${jsonObject.data.name} chưa ghi được điểm`,
             {
@@ -167,7 +163,6 @@ function App() {
     const body = JSON.stringify({ teamCode: teamCode })
     stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
       const jsonObject = JSON.parse(greeting.body);
-      console.log(jsonObject);
     if (jsonObject.cmd == "BELL_OPEN"){
       setIsBell(true);
     }
