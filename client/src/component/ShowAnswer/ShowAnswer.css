@@ -1,0 +1,20 @@
+.list-answer{
+    padding: 20px 20px;
+    margin-top: 20px;
+    background-color: aqua;
+    border-radius: 20px;
+    border: 1px soild brown;
+}
+
+.list-answer .has-answer{
+    font-weight: 600;
+    font-size: 30px;
+    text-shadow: 1px 1px;
+    color: mediumorchid;
+
+}
+
+.list-answer .no-answer{
+    color: blueviolet;
+    font-size: 25px;
+}

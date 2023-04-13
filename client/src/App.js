@@ -4,6 +4,7 @@ import Welcome from './component/Welcome';
 import Ready from './component/Ready';
 import Loading from './component/Loading';
 import ShowQuestion from './component/ShowQuestion';
+import ShowAnswer from './component/ShowAnswer';
 
 import { toast, Toaster } from 'react-hot-toast';
 import { useState, useEffect } from 'react';
@@ -24,6 +25,7 @@ function App() {
   const [question, setQuestion] = useState({});
   const [isBell, setIsBell] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [listAnswer, setListAnswer] = useState({})
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -73,6 +75,7 @@ function App() {
     const body = JSON.stringify({ teamCode })
     stompClient.subscribe(`/topic/${teamCode}`, function (greeting) {
       const jsonObject = JSON.parse(greeting.body);
+      console.log(jsonObject);
       if (jsonObject.cmd == "TEAM_CONNECTED") {
         setTeamName(jsonObject.data.name)
         setScore(jsonObject.data.score);
@@ -112,11 +115,11 @@ function App() {
       }
 
       if (jsonObject.cmd == "STOP_ANSWERING") {
-        setPhase(0)
         setStep('loading')
+        setListAnswer(jsonObject)
         setTimeout(() => {
-          setStep('ready');
-        }, 2000);
+          setStep('showAnswer');
+        }, 500);
 
       }
       if (jsonObject.cmd == "BELL_OPEN") {
@@ -194,9 +197,12 @@ function App() {
             message={message}
             handleRingBell={handleRingBell}
             isBell={isBell}
+            listAnswer={listAnswer}
           />
         ) : step === 'loading' ? (
           <Loading />
+        ) : step === 'showAnswer' ? (
+          <ShowAnswer phase={phase} listAnswer={listAnswer} question={question}/>
         ) : step === 'showQuestion' ? (
           <ShowQuestion
             sendAnswerToServer={sendAnswerToServer}

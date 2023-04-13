@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { message } from 'antd';
 import {Button} from 'antd'
 
-const Ready = ({ teamName, score, phase, message, handleRingBell, isBell }) => {
+const Ready = ({ teamName, score, phase, message, handleRingBell, isBell,listAnswer }) => {
   if (phase == 0) {
     return (
       <div className="container">
