@@ -44,7 +44,9 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
   }, [timeLeft])
 
   const handleStopQuestion = async () => {
+    console.log("handle stop question");
     const response = await axiosInstance.post(`/question/${questionId}/stop`)
+    console.log(response);
   }
 
   const handleClickQuesCard = async (index) => {

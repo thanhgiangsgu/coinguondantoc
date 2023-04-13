@@ -77,7 +77,8 @@ const Exam2 = ({ secondPhaseQuestions, setStep, listAnswer, competitionName, bel
 
     const handleClickAnswered = async (dataChild, index) => {
         await setTmpDataChild(dataChild)
-        const response = await axiosInstance.post(`/question/${dataChild.id}/start`);
+        const response = await axiosInstance.post(`/question/${dataChild.id}/stop`);
+        localStorage.setItem('listAnswer', JSON.stringify(response.data));
         showModal();
         setIndexSelected(index)
     }

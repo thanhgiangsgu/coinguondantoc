@@ -52,6 +52,7 @@ function App() {
       setStompClient(stompClient)
       stompClient.subscribe('/topic/host', function (message) {
         const jsonObject = JSON.parse(message.body);
+        console.log(jsonObject);
         if (jsonObject.cmd == "TEAM_CONNECTED") {
           updateTeamList(jsonObject)
         }

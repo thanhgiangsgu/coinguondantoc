@@ -54,6 +54,7 @@ const ModalExam2 = ({tmpDataChild, competitionName , isLoad}) => {
 
     const handleStopQuestion = async () => {
         const response = await axiosInstance.post(`/question/${info.id}/stop`);
+        console.log(response);
     }
 
     const handleUpdateScore = async (check, teamId, name) => {
