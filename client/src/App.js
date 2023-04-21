@@ -116,11 +116,19 @@ function App() {
 
       if (jsonObject.cmd == "STOP_ANSWERING") {
         setStep('loading')
+        // setListAnswer(jsonObject)
+        setTimeout(() => {
+          setStep('ready');
+        }, 500);
+
+      }
+
+      if (jsonObject.cmd == "SHOW_ANSWER"){
+        setStep('loading')
         setListAnswer(jsonObject)
         setTimeout(() => {
           setStep('showAnswer');
         }, 500);
-
       }
       if (jsonObject.cmd == "BELL_OPEN") {
         setIsBell(true);
