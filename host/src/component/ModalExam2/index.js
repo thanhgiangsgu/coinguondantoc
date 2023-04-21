@@ -76,6 +76,12 @@ const ModalExam2 = ({tmpDataChild, competitionName , isLoad}) => {
         setTimeLeft(20);
     }
 
+    const handleShowAnswer = async () => {
+        const response = await axiosInstance.post(`/question/${info.id}/show-answers`);
+        console.log(response);
+        showModal()
+    }
+
 
     return (
         <div className='modal-container'>
@@ -107,7 +113,7 @@ const ModalExam2 = ({tmpDataChild, competitionName , isLoad}) => {
                         <Space direction='vertical'>
                             <Button className='button-control' type='primary' onClick={handleClickCountingTime}>Đếm giờ</Button>
                             <Button className='button-control' type='primary' onClick={() => setShowAns(info.correctAnswers.content)}>Hiện câu trả lời</Button>
-                            <Button onClick={() => showModal()} className='button-control' type='primary'>Xem câu trả lời của các nhóm</Button>
+                            <Button onClick={handleShowAnswer} className='button-control' type='primary'>Xem câu trả lời của các nhóm</Button>
                         </Space>
                     </Space>
                 </Space>

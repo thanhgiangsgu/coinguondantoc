@@ -74,10 +74,10 @@ const Exam1Child = ({ setStep, competitionName, teamIdSelected }) => {
     setAns("")
   }
 
-  const handleClickAnsCard = (index) => {
-
+  const handleClickAnsCard = async (index) => {
     setAns(tmpData[index].correctAnswers.content)
     setIsShowConfirmAnswer(false)
+    const response = await axiosInstance.post(`/question/${questionId}/show-answers`)
   }
 
   const handleUpdateScore = async () => {
